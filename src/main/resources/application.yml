@@ -1,6 +1,18 @@
-#========================================
-# General settings
-#========================================
+spring:
+  application:
+    name: api-service-installation
+  security:
+    oauth2:
+      client:
+        registration:
+          datawarehousereader:
+            authorization-grant-type: client_credentials
+            provider: datawarehousereader
+            client-id: ${config.spring.security.oauth2.client.registration.datawarehousereader.client-id}
+            client-secret: ${config.spring.security.oauth2.client.registration.datawarehousereader.client-secret}
+        provider:
+          datawarehousereader:
+            token-uri: ${config.spring.security.oauth2.client.provider.datawarehousereader.token-uri}
 logging:
   level:
     root: INFO
@@ -8,6 +20,13 @@ openapi:
   name: ${spring.application.name}
   title: ${spring.application.name}
   version: '@project.version@'
-spring:
-  application:
-    name: template
+integration:
+  datawarehousereader:
+    url: ${config.integration.datawarehousereader.url}
+    connect-timeout: 5
+    read-timeout: 30
+resilience4j:
+  circuitbreaker:
+    instances:
+      datawarehousereader:
+        ignoreExceptions: se.sundsvall.dept44.exception.ClientProblem
