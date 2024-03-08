@@ -1,6 +1,18 @@
-#========================================
-# Test profile settings (IT tests)
-#========================================
+config:
+  integration:
+    datawarehousereader:
+      url: http://localhost:${wiremock.server.port}/api-datawarehousereader
+  spring:
+    security:
+      oauth2:
+        client:
+          provider:
+            datawarehousereader:
+              token-uri: http://localhost:${wiremock.server.port:}/api-gateway/token
+          registration:
+            datawarehousereader:
+              client-id: the-client-id
+              client-secret: the-client-secret
 logging:
   level:
     root: DEBUG
