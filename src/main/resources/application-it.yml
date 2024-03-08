@@ -1,0 +1,21 @@
+config:
+  integration:
+    datawarehousereader:
+      url: http://localhost:${wiremock.server.port}/api-datawarehousereader
+      connect-timeout: 5
+      read-timeout: 20
+  spring:
+    security:
+      oauth2:
+        client:
+          provider:
+            datawarehousereader:
+              token-uri: http://localhost:${wiremock.server.port:}/api-gateway/token
+          registration:
+            datawarehousereader:
+              authorization-grant-type: client_credentials
+              client-id: the-client-id
+              client-secret: the-client-secret
+              provider: datawarehousereader
+
+
