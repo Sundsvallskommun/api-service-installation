@@ -17,8 +17,18 @@
         <!-- Service properties -->
         <generated-sources-path>${project.build.directory}/generated-sources</generated-sources-path>
         <generated-sources-java-path>src/main/java</generated-sources-java-path>
+        <!-- Pipeline properties -->
+        <docker.image.name>ms-installation</docker.image.name>
+        <published.container.port.test>8733</published.container.port.test>
+        <published.container.port.production>8733</published.container.port.production>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>se.sundsvall.dept44</groupId>
             <artifactId>dept44-starter-feign</artifactId>
@@ -38,7 +48,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -102,5 +111,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

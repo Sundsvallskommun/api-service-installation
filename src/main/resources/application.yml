@@ -10,6 +10,9 @@ spring:
                 client-id: ${config.spring.security.oauth2.client.registration.datawarehousereader.client-id}
                 client-secret: ${config.spring.security.oauth2.client.registration.datawarehousereader.client-secret}
                 provider: ${config.spring.security.oauth2.client.registration.datawarehousereader.provider}
+logging:
+  level:
+    root: ${config.logging.level.root}
 openapi:
   name: ${spring.application.name}
   title: ${spring.application.name}

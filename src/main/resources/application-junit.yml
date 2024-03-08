@@ -4,6 +4,9 @@ config:
       url: http://datawarehousereader.url
       connect-timeout: 5
       read-timeout: 20
+  logging:
+    level:
+      root: DEBUG
   spring:
     security:
       oauth2:

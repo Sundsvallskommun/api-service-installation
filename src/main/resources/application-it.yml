@@ -4,6 +4,9 @@ config:
       url: http://localhost:${wiremock.server.port}/api-datawarehousereader
       connect-timeout: 5
       read-timeout: 20
+  logging:
+    level:
+      root: DEBUG
   spring:
     security:
       oauth2:
@@ -17,5 +20,3 @@ config:
               client-id: the-client-id
               client-secret: the-client-secret
               provider: datawarehousereader
-
-
