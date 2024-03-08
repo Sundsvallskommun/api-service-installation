@@ -6,5 +6,6 @@ import org.springframework.stereotype.Service;
 public class InstallationService {
 
 	public InstallationService() {
+		// placeholder
 	}
 }

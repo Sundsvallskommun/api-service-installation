@@ -49,9 +49,4 @@ hs_err_pid*
 .env
 
 # Spring
-<<<<<<< HEAD
 application-default.properties
-=======
-application-default.properties
-
->>>>>>> fae8f7ab6296f23861e8bdbaf7717040bf646c3c

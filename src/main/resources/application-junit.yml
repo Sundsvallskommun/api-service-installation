@@ -2,11 +2,6 @@ config:
   integration:
     datawarehousereader:
       url: http://datawarehousereader.url
-      connect-timeout: 5
-      read-timeout: 20
-  logging:
-    level:
-      root: DEBUG
   spring:
     security:
       oauth2:
@@ -16,7 +11,8 @@ config:
               token-uri: http://token.url
           registration:
             datawarehousereader:
-              authorization-grant-type: client_credentials
               client-id: the-client-id
               client-secret: the-client-secret
-              provider: datawarehousereader
+logging:
+  level:
+    root: DEBUG

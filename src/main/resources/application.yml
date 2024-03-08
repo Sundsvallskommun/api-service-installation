@@ -5,14 +5,17 @@ spring:
     oauth2:
       client:
         registration:
-            datawarehousereader:
-                authorization-grant-type: ${config.spring.security.oauth2.client.registration.datawarehousereader.authorization-grant-type}
-                client-id: ${config.spring.security.oauth2.client.registration.datawarehousereader.client-id}
-                client-secret: ${config.spring.security.oauth2.client.registration.datawarehousereader.client-secret}
-                provider: ${config.spring.security.oauth2.client.registration.datawarehousereader.provider}
+          datawarehousereader:
+            authorization-grant-type: client_credentials
+            provider: datawarehousereader
+            client-id: ${config.spring.security.oauth2.client.registration.datawarehousereader.client-id}
+            client-secret: ${config.spring.security.oauth2.client.registration.datawarehousereader.client-secret}
+        provider:
+          datawarehousereader:
+            token-uri: ${config.spring.security.oauth2.client.provider.datawarehousereader.token-uri}
 logging:
   level:
-    root: ${config.logging.level.root}
+    root: INFO
 openapi:
   name: ${spring.application.name}
   title: ${spring.application.name}
@@ -20,8 +23,8 @@ openapi:
 integration:
   datawarehousereader:
     url: ${config.integration.datawarehousereader.url}
-    connect-timeout: ${config.integration.datawarehousereader.connect-timeout}
-    read-timeout: ${config.integration.datawarehousereader.read-timeout}
+    connect-timeout: 5
+    read-timeout: 30
 resilience4j:
   circuitbreaker:
     instances:
