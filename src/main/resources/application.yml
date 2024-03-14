@@ -8,11 +8,11 @@ spring:
           datawarehousereader:
             authorization-grant-type: client_credentials
             provider: datawarehousereader
-            client-id: ${config.datawarehousereader.client-id}
-            client-secret: ${config.datawarehousereader.client-secret}
+            client-id: ${config.integration.datawarehousereader.client-id}
+            client-secret: ${config.integration.datawarehousereader.client-secret}
         provider:
           datawarehousereader:
-            token-uri: ${config.datawarehousereader.token-url}
+            token-uri: ${config.integration.datawarehousereader.token-url}
 logging:
   level:
     root: INFO

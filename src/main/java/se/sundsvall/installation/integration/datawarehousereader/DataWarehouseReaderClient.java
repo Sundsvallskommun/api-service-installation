@@ -2,8 +2,8 @@ package se.sundsvall.installation.integration.datawarehousereader;
 
 import static se.sundsvall.installation.integration.datawarehousereader.configuration.DataWarehouseReaderConfiguration.CLIENT_ID;
 
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import se.sundsvall.installation.integration.datawarehousereader.configuration.DataWarehouseReaderConfiguration;
@@ -20,6 +20,6 @@ import generated.se.sundsvall.datawarehousereader.InstallationParameters;
 public interface DataWarehouseReaderClient {
 
 	@GetMapping
-	InstallationDetailsResponse getInstallationDetails(@ParameterObject final InstallationParameters installationParameters);
+	InstallationDetailsResponse getInstallationDetails(@SpringQueryMap final InstallationParameters installationParameters);
 
 }

@@ -18,7 +18,7 @@ import generated.se.sundsvall.datawarehousereader.InstallationDetailsResponse;
 @ActiveProfiles("it")
 class InstallationIT extends AbstractAppTest {
 
-	private static final String RESPONSE_FILE = "response.json";
+	private static final String EXPECTED_FILE = "expected.json";
 
 	@Test
 	void test1_getInstallations() throws JsonProcessingException, ClassNotFoundException {
@@ -26,7 +26,7 @@ class InstallationIT extends AbstractAppTest {
 		final var response = setupCall()
 			.withServicePath("/installations?installed=false&facilityId=123&dateFrom=2022-01-01&category=ELECTRICITY&page=1&limit=10&sortBy=facilityId&sortDirection=ASC")
 			.withHttpMethod(GET)
-			.withExpectedResponse(RESPONSE_FILE)
+			.withExpectedResponse(EXPECTED_FILE)
 			.withExpectedResponseStatus(OK)
 			.sendRequestAndVerifyResponse()
 			.andReturnBody(InstallationDetailsResponse.class);
