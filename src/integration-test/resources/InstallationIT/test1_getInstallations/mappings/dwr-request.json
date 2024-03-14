@@ -1,0 +1,72 @@
+{
+  "name": "api-datawarehousereader-get-installations",
+  "request": {
+    "method": "GET",
+    "urlPath": "/api-datawarehousereader",
+    "queryParameters": {
+      "installed": {
+        "equalTo": "false"
+      },
+      "facilityId": {
+        "equalTo": "123"
+      },
+      "category": {
+        "equalTo": "ELECTRICITY"
+      },
+      "dateFrom": {
+        "equalTo": "2022-01-01"
+      },
+      "limit": {
+        "equalTo": "100"
+      },
+      "page": {
+        "equalTo": "1"
+      },
+      "sort": {
+        "equalTo": "facilityId"
+      },
+      "sortDirection": {
+        "equalTo": "ASC"
+      }
+    }
+  },
+  "response": {
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "status": 200,
+    "jsonBody": {
+      "installationDetails": [
+        {
+          "company": "3b7a5955-f481-42bd-a2b3-6ef8bd76b105",
+          "type": "Private",
+          "facilityId": "691071",
+          "placementId": "556478-6647",
+          "careOf": "Sundsvall Energi AB",
+          "street": "Sundsvall Energi AB",
+          "postCode": "Sundsvall Energi AB",
+          "city": "Sundsvall Energi AB",
+          "dateFrom": "Sundsvall Energi AB",
+          "dateTo": "Sundsvall Energi AB",
+          "dateLastModified": "Sundsvall Energi AB",
+          "metaData": [
+            {
+              "company": "test",
+              "key": "test",
+              "value": "test",
+              "type": "test",
+              "displayName": "test"
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "page": 1,
+        "limit": 100,
+        "count": 1,
+        "totalRecords": 1,
+        "totalPages": 1
+      }
+    }
+  }
+}

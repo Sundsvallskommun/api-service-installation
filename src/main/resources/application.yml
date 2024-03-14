@@ -8,11 +8,11 @@ spring:
           datawarehousereader:
             authorization-grant-type: client_credentials
             provider: datawarehousereader
-            client-id: ${config.spring.security.oauth2.client.registration.datawarehousereader.client-id}
-            client-secret: ${config.spring.security.oauth2.client.registration.datawarehousereader.client-secret}
+            client-id: ${config.datawarehousereader.client-id}
+            client-secret: ${config.datawarehousereader.client-secret}
         provider:
           datawarehousereader:
-            token-uri: ${config.spring.security.oauth2.client.provider.datawarehousereader.token-uri}
+            token-uri: ${config.datawarehousereader.token-url}
 logging:
   level:
     root: INFO
@@ -22,7 +22,7 @@ openapi:
   version: '@project.version@'
 integration:
   datawarehousereader:
-    url: ${config.integration.datawarehousereader.url}
+    url: ${config.integration.datawarehousereader.base-url}
     connect-timeout: 5
     read-timeout: 30
 resilience4j:
