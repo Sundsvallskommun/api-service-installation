@@ -1,6 +1,6 @@
 package se.sundsvall.installation.api;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -8,6 +8,8 @@ import static se.sundsvall.installation.TestUtil.createParameterMap;
 import static se.sundsvall.installation.TestUtil.createSearchParameters;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -25,6 +27,9 @@ class InstallationResourceTest {
 	@MockBean
 	private InstallationService installationServiceMock;
 
+	@Captor
+	private ArgumentCaptor<SearchParameters> searchParametersCaptor;
+
 	@Autowired
 	private WebTestClient webTestClient;
 
@@ -38,7 +43,19 @@ class InstallationResourceTest {
 			.exchange()
 			.expectStatus().isOk();
 
-		verify(installationServiceMock).getInstallations(any(SearchParameters.class));
+		verify(installationServiceMock).getInstallations(searchParametersCaptor.capture());
+
+		assertThat(searchParametersCaptor.getValue()).satisfies(bean -> {
+			assertThat(bean.getCategory()).isEqualTo(searchParameters.getCategory());
+			assertThat(bean.getDateFrom()).isEqualTo(searchParameters.getDateFrom());
+			assertThat(bean.getFacilityId()).isEqualTo(searchParameters.getFacilityId());
+			assertThat(bean.getInstalled()).isEqualTo(searchParameters.getInstalled());
+			assertThat(bean.getLimit()).isEqualTo(searchParameters.getLimit());
+			assertThat(bean.getPage()).isEqualTo(searchParameters.getPage());
+			assertThat(bean.getSortBy()).isEqualTo(searchParameters.getSortBy());
+			assertThat(bean.getSortDirection()).isEqualTo(searchParameters.getSortDirection());
+		});
+
 		verifyNoMoreInteractions(installationServiceMock);
 	}
 

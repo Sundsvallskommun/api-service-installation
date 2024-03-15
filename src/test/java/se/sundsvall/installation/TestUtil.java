@@ -31,7 +31,7 @@ public final class TestUtil {
 			.withCategory("ELECTRICITY")
 			.withPage(1)
 			.withLimit(100)
-			.withSortBy(List.of("name"))
+			.withSortBy(List.of("sortBy"))
 			.withSortDirection(Direction.ASC)
 			.build();
 	}
@@ -74,8 +74,8 @@ public final class TestUtil {
 		ofNullable(searchParameters.getCategory()).ifPresent(p -> parameters.add("category", p));
 		ofNullable(searchParameters.getPage()).ifPresent(p -> parameters.add("page", p.toString()));
 		ofNullable(searchParameters.getLimit()).ifPresent(p -> parameters.add("limit", p.toString()));
-		ofNullable(searchParameters.getSortBy()).ifPresent(p -> parameters.add("sortBy", String.valueOf(p)));
 		ofNullable(searchParameters.getSortDirection()).ifPresent(p -> parameters.add("sortDirection", String.valueOf(p)));
+		ofNullable(searchParameters.getSortBy()).ifPresent(p -> p.forEach(sortBy -> parameters.add("sortBy", sortBy)));
 		return parameters;
 	}
 

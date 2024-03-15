@@ -7,6 +7,8 @@ import static se.sundsvall.installation.TestUtil.createSearchParameters;
 
 import org.junit.jupiter.api.Test;
 
+import se.sundsvall.installation.api.model.SearchParameters;
+
 class MapperTest {
 
 	@Test
@@ -33,6 +35,18 @@ class MapperTest {
 
 		assertThat(installationsResponse).isNotNull();
 		assertThat(installationsResponse.getInstallationDetails()).isEqualTo(installationDetailsResponse.getInstallationDetails());
+	}
+
+	@Test
+	void toInstallationParametersFromNull() {
+		assertThat(Mapper.toInstallationParameters(null)).isNull();
+	}
+
+	@Test
+	void toInstallationParametersFromEmptyParameters() {
+		final var bean = Mapper.toInstallationParameters(SearchParameters.builder().build());
+
+		assertThat(bean).hasAllNullFieldsOrProperties();
 	}
 
 }
