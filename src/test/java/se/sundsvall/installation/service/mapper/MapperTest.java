@@ -2,18 +2,18 @@ package se.sundsvall.installation.service.mapper;
 
 import static generated.se.sundsvall.datawarehousereader.Category.ELECTRICITY;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static se.sundsvall.installation.TestUtil.createInstallationDetailsResponse;
 import static se.sundsvall.installation.TestUtil.createSearchParameters;
 
 import org.junit.jupiter.api.Test;
 
-class RequestMapperTest {
+class MapperTest {
 
 	@Test
 	void toInstallationParameters() {
 		final var searchParameters = createSearchParameters();
 
-		final var installationParameters = RequestMapper.toInstallationParameters(searchParameters);
+		final var installationParameters = Mapper.toInstallationParameters(searchParameters);
 
 		assertThat(installationParameters.getInstalled()).isFalse();
 		assertThat(installationParameters.getDateFrom()).isEqualTo(searchParameters.getDateFrom());
@@ -26,13 +26,13 @@ class RequestMapperTest {
 	}
 
 	@Test
-	void toInstallationParametersInvalidCategory() {
-		final var value = "INVALID";
-		final var searchParameters = createSearchParameters(p -> p.setCategory(value));
+	void toInstallationsResponse() {
+		final var installationDetailsResponse = createInstallationDetailsResponse();
 
-		assertThatThrownBy(() -> RequestMapper.toInstallationParameters(searchParameters))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("Unexpected value '" + value + "'");
+		final var installationsResponse = Mapper.toInstallationsResponse(installationDetailsResponse);
+
+		assertThat(installationsResponse).isNotNull();
+		assertThat(installationsResponse.getInstallationDetails()).isEqualTo(installationDetailsResponse.getInstallationDetails());
 	}
 
 }

@@ -1,6 +1,5 @@
 package apptest;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -22,16 +21,13 @@ class InstallationIT extends AbstractAppTest {
 
 	@Test
 	void test1_getInstallations() throws JsonProcessingException, ClassNotFoundException {
-
-		final var response = setupCall()
+		setupCall()
 			.withServicePath("/installations?installed=false&facilityId=123&dateFrom=2022-01-01&category=ELECTRICITY&page=1&limit=10&sortBy=facilityId&sortDirection=ASC")
 			.withHttpMethod(GET)
 			.withExpectedResponse(EXPECTED_FILE)
 			.withExpectedResponseStatus(OK)
 			.sendRequestAndVerifyResponse()
 			.andReturnBody(InstallationDetailsResponse.class);
-
-		assertThat(response).isNotNull();
 	}
 
 }

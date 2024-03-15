@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.zalando.problem.Problem;
 import org.zalando.problem.violations.ConstraintViolationProblem;
 
+import se.sundsvall.installation.api.model.InstallationsResponse;
 import se.sundsvall.installation.api.model.SearchParameters;
 import se.sundsvall.installation.service.InstallationService;
 
-import generated.se.sundsvall.datawarehousereader.InstallationDetailsResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -47,7 +47,7 @@ class InstallationResource {
 		@ApiResponse(responseCode = "502", description = "Bad Gateway", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
 	@GetMapping(produces = {APPLICATION_JSON_VALUE, APPLICATION_PROBLEM_JSON_VALUE})
-	public ResponseEntity<InstallationDetailsResponse> getInstallations(
+	public ResponseEntity<InstallationsResponse> getInstallations(
 		@Valid @ParameterObject final SearchParameters searchParameters) {
 		return ok(installationService.getInstallations(searchParameters));
 	}

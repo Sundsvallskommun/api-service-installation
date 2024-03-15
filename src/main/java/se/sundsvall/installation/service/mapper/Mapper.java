@@ -2,14 +2,16 @@ package se.sundsvall.installation.service.mapper;
 
 import java.util.Optional;
 
+import se.sundsvall.installation.api.model.InstallationsResponse;
 import se.sundsvall.installation.api.model.SearchParameters;
 
 import generated.se.sundsvall.datawarehousereader.Category;
+import generated.se.sundsvall.datawarehousereader.InstallationDetailsResponse;
 import generated.se.sundsvall.datawarehousereader.InstallationParameters;
 
-public final class RequestMapper {
+public final class Mapper {
 
-	private RequestMapper() {
+	private Mapper() {
 		//prevent instantiation
 	}
 
@@ -17,7 +19,7 @@ public final class RequestMapper {
 		return Optional.ofNullable(searchParameters).map(searchParams -> new InstallationParameters()
 				.installed(searchParams.getInstalled())
 				.dateFrom(searchParams.getDateFrom())
-				.category(Category.fromValue(searchParams.getCategory()))
+				.category(Optional.ofNullable(searchParams.getCategory()).map(Category::fromValue).orElse(null))
 				.facilityId(searchParams.getFacilityId())
 				.page(searchParams.getPage())
 				.limit(searchParams.getLimit())
@@ -26,5 +28,11 @@ public final class RequestMapper {
 			.orElse(null);
 	}
 
+	public static InstallationsResponse toInstallationsResponse(final InstallationDetailsResponse installationDetailsResponse) {
+		return Optional.ofNullable(installationDetailsResponse).map(response -> InstallationsResponse.builder()
+				.withInstallationDetails(response.getInstallationDetails())
+				.build())
+			.orElse(null);
+	}
 
 }

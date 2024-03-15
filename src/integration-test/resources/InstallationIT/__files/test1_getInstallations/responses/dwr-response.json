@@ -22,5 +22,12 @@
       "street": "Testvägen 5",
       "type": "ELECTRICITY"
     }
-  ]
+  ],
+  "_meta": {
+    "page": 1,
+    "limit": 10,
+    "count": 1,
+    "totalRecords": 1,
+    "totalPages": 1
+  }
 }

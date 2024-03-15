@@ -1,13 +1,13 @@
 package se.sundsvall.installation.service;
 
-import static se.sundsvall.installation.service.mapper.RequestMapper.toInstallationParameters;
+import static se.sundsvall.installation.service.mapper.Mapper.toInstallationParameters;
+import static se.sundsvall.installation.service.mapper.Mapper.toInstallationsResponse;
 
 import org.springframework.stereotype.Service;
 
+import se.sundsvall.installation.api.model.InstallationsResponse;
 import se.sundsvall.installation.api.model.SearchParameters;
 import se.sundsvall.installation.integration.datawarehousereader.DataWarehouseReaderClient;
-
-import generated.se.sundsvall.datawarehousereader.InstallationDetailsResponse;
 
 @Service
 public class InstallationService {
@@ -18,7 +18,8 @@ public class InstallationService {
 		this.dataWarehouseReaderClient = dataWarehouseReaderClient;
 	}
 
-	public InstallationDetailsResponse getInstallations(final SearchParameters searchParameters) {
-		return dataWarehouseReaderClient.getInstallationDetails(toInstallationParameters(searchParameters));
+	public InstallationsResponse getInstallations(final SearchParameters searchParameters) {
+		final var dwrResponse = dataWarehouseReaderClient.getInstallationDetails(toInstallationParameters(searchParameters));
+		return toInstallationsResponse(dwrResponse);
 	}
 }

@@ -14,6 +14,8 @@ import org.springframework.util.MultiValueMap;
 import se.sundsvall.installation.api.model.SearchParameters;
 
 import generated.se.sundsvall.datawarehousereader.Direction;
+import generated.se.sundsvall.datawarehousereader.InstallationDetails;
+import generated.se.sundsvall.datawarehousereader.InstallationDetailsResponse;
 
 public final class TestUtil {
 
@@ -32,6 +34,29 @@ public final class TestUtil {
 			.withSortBy(List.of("name"))
 			.withSortDirection(Direction.ASC)
 			.build();
+	}
+
+	public static InstallationDetails createInstallationDetails() {
+		return new InstallationDetails()
+			.company("company")
+			.type("category")
+			.facilityId("facilityId")
+			.placementId(123456)
+			.careOf("careOf")
+			.street("street")
+			.postCode("postalCode")
+			.city("city")
+			.propertyDesignation("propertyDesignation")
+			.dateFrom(LocalDate.now())
+			.dateTo(LocalDate.now())
+			.dateLastModified(LocalDate.now())
+			.metaData(List.of());
+	}
+
+	public static InstallationDetailsResponse createInstallationDetailsResponse() {
+		final var response = new InstallationDetailsResponse();
+		response.setInstallationDetails(List.of(createInstallationDetails()));
+		return response;
 	}
 
 	public static SearchParameters createSearchParameters(final Consumer<SearchParameters> modifier) {
