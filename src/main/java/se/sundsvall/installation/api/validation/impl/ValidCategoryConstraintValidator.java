@@ -9,7 +9,7 @@ import se.sundsvall.installation.api.validation.ValidCategory;
 
 public class ValidCategoryConstraintValidator implements ConstraintValidator<ValidCategory, String> {
 
-	public static final List<String> VALID_CATEGORIES = List.of("ELECTRICITY", "WASTE_MANAGEMENT", "ELECTRICITY_TRADE", "DISTRICT_COOLING", "DISTRICT_HEATING");
+	private static final List<String> VALID_CATEGORIES = List.of("ELECTRICITY", "WASTE_MANAGEMENT", "ELECTRICITY_TRADE", "DISTRICT_COOLING", "DISTRICT_HEATING");
 
 	@Override
 	public boolean isValid(final String category, final ConstraintValidatorContext context) {

@@ -8,14 +8,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import se.sundsvall.installation.api.model.SearchParameters;
 
-import generated.se.sundsvall.datawarehousereader.Direction;
 import generated.se.sundsvall.datawarehousereader.InstallationDetails;
 import generated.se.sundsvall.datawarehousereader.InstallationDetailsResponse;
+import generated.se.sundsvall.datawarehousereader.InstallationMetaDataEmbeddable;
 
 public final class TestUtil {
 
@@ -24,16 +25,15 @@ public final class TestUtil {
 	}
 
 	public static SearchParameters createSearchParameters() {
-		return SearchParameters.builder()
-			.withInstalled(false)
+		return (SearchParameters) SearchParameters.create()
+			.withCategory("ELECTRICITY")
 			.withDateFrom(LocalDate.now())
 			.withFacilityId("facilityId")
-			.withCategory("ELECTRICITY")
+			.withInstalled(false)
 			.withPage(1)
-			.withLimit(100)
-			.withSortBy(List.of("sortBy"))
-			.withSortDirection(Direction.ASC)
-			.build();
+			.withLimit(10)
+			.withSortDirection(Sort.Direction.ASC)
+			.withSortBy(List.of("sortBy"));
 	}
 
 	public static InstallationDetails createInstallationDetails() {
@@ -51,6 +51,32 @@ public final class TestUtil {
 			.dateTo(LocalDate.now())
 			.dateLastModified(LocalDate.now())
 			.metaData(List.of());
+	}
+
+	public static generated.se.sundsvall.datawarehousereader.InstallationDetails createDWRInstallationDetails() {
+		return new generated.se.sundsvall.datawarehousereader.InstallationDetails()
+			.company("company")
+			.type("category")
+			.facilityId("facilityId")
+			.placementId(123456)
+			.careOf("careOf")
+			.street("street")
+			.postCode("postalCode")
+			.city("city")
+			.propertyDesignation("propertyDesignation")
+			.dateFrom(LocalDate.now())
+			.dateTo(LocalDate.now())
+			.dateLastModified(LocalDate.now())
+			.metaData(List.of());
+	}
+
+	public static InstallationMetaDataEmbeddable createDWRInstallationMetaDataEmbeddable() {
+		return new InstallationMetaDataEmbeddable()
+			.key("key")
+			.value("value")
+			.company("company")
+			.type("category")
+			.displayName("displayName");
 	}
 
 	public static InstallationDetailsResponse createInstallationDetailsResponse() {
@@ -72,8 +98,8 @@ public final class TestUtil {
 		ofNullable(searchParameters.getFacilityId()).ifPresent(p -> parameters.add("facilityId", p));
 		ofNullable(searchParameters.getDateFrom()).ifPresent(p -> parameters.add("dateFrom", p.toString()));
 		ofNullable(searchParameters.getCategory()).ifPresent(p -> parameters.add("category", p));
-		ofNullable(searchParameters.getPage()).ifPresent(p -> parameters.add("page", p.toString()));
-		ofNullable(searchParameters.getLimit()).ifPresent(p -> parameters.add("limit", p.toString()));
+		Optional.of(searchParameters.getPage()).ifPresent(p -> parameters.add("page", p.toString()));
+		Optional.of(searchParameters.getLimit()).ifPresent(p -> parameters.add("limit", p.toString()));
 		ofNullable(searchParameters.getSortDirection()).ifPresent(p -> parameters.add("sortDirection", String.valueOf(p)));
 		ofNullable(searchParameters.getSortBy()).ifPresent(p -> p.forEach(sortBy -> parameters.add("sortBy", sortBy)));
 		return parameters;

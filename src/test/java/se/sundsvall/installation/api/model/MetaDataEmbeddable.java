@@ -12,8 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import generated.se.sundsvall.datawarehousereader.PagingAndSortingMetaData;
 
-
-class InstallationsResponseTest {
+public class MetaDataEmbeddable {
 
 	@Test
 	void testBean() {

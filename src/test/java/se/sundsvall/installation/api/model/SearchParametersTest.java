@@ -13,8 +13,7 @@ import com.google.code.beanmatchers.BeanMatchers;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import generated.se.sundsvall.datawarehousereader.Direction;
+import org.springframework.data.domain.Sort.Direction;
 
 class SearchParametersTest {
 
@@ -41,7 +40,7 @@ class SearchParametersTest {
 		final var sortBy = List.of("sortBy");
 		final var sortDirection = Direction.ASC;
 
-		final var searchParameters = SearchParameters.builder()
+		final SearchParameters searchParameters = (SearchParameters) SearchParameters.create()
 			.withInstalled(installed)
 			.withCategory(category)
 			.withFacilityId(facilityId)
@@ -49,8 +48,7 @@ class SearchParametersTest {
 			.withPage(page)
 			.withLimit(limit)
 			.withSortBy(sortBy)
-			.withSortDirection(sortDirection)
-			.build();
+			.withSortDirection(sortDirection);
 
 		Assertions.assertThat(searchParameters).isNotNull().hasNoNullFieldsOrProperties();
 		Assertions.assertThat(searchParameters.getInstalled()).isEqualTo(installed);
@@ -65,11 +63,11 @@ class SearchParametersTest {
 
 	@Test
 	void testNoDirtOnCreatedBean() {
-		Assertions.assertThat(SearchParameters.builder().build())
-			.hasAllNullFieldsOrProperties();
+		Assertions.assertThat(SearchParameters.create())
+			.hasAllNullFieldsOrPropertiesExcept("page", "limit", "count", "totalRecords", "totalPages");
 
 		Assertions.assertThat(new SearchParameters())
-			.hasAllNullFieldsOrProperties();
+			.hasAllNullFieldsOrPropertiesExcept("page", "limit", "count", "totalRecords", "totalPages");
 	}
 
 }

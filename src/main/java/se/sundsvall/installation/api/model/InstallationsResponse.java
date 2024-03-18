@@ -4,7 +4,7 @@ import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 import java.util.List;
 
-import generated.se.sundsvall.datawarehousereader.InstallationDetails;
+import generated.se.sundsvall.datawarehousereader.PagingAndSortingMetaData;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -22,5 +22,8 @@ public class InstallationsResponse {
 
 	@ArraySchema(schema = @Schema(implementation = InstallationDetails.class, accessMode = READ_ONLY))
 	private List<InstallationDetails> installationDetails;
+
+	@Schema(description = "Paging and sorting metadata", accessMode = READ_ONLY)
+	private PagingAndSortingMetaData meta;
 
 }
