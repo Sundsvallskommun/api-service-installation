@@ -1,26 +1,33 @@
 {
   "installationDetails": [
     {
-      "company": "TEST AB",
-      "type": "ELECTRICITY",
-      "facilityId": "691071",
-      "placementId": 5564747,
       "careOf": "Testern",
-      "street": "Testvägen 5",
-      "postCode": "85742",
       "city": "Testvall",
+      "company": "TEST AB",
       "dateFrom": "2022-01-01",
-      "dateTo": "2023-01-01",
       "dateLastModified": "2022-06-01",
-      "metaData": [
+      "dateTo": "2023-01-01",
+      "facilityId": "691071",
+      "metaDataEmbeddables": [
         {
           "company": "test",
+          "displayName": "test",
           "key": "test",
-          "value": "test",
           "type": "test",
-          "displayName": "test"
+          "value": "test"
         }
-      ]
+      ],
+      "placementId": 5564747,
+      "postCode": "85742",
+      "street": "Testvägen 5",
+      "type": "ELECTRICITY"
     }
-  ]
+  ],
+  "meta": {
+    "count": 1,
+    "limit": 10,
+    "page": 1,
+    "totalPages": 1,
+    "totalRecords": 1
+  }
 }

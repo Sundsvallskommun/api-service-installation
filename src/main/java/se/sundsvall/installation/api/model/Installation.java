@@ -11,13 +11,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @Builder(setterPrefix = "with")
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class InstallationDetails {
+public class Installation {
 
 	@Schema(description = "Company name", accessMode = Schema.AccessMode.READ_ONLY)
 	private String company;
@@ -59,5 +61,5 @@ public class InstallationDetails {
 	private LocalDate dateLastModified;
 
 	@Schema(description = "Meta data", accessMode = Schema.AccessMode.READ_ONLY)
-	private List<MetaDataEmbeddable> metaData;
+	private List<MetaDataEmbeddable> metaDataEmbeddables;
 }

@@ -8,6 +8,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 import se.sundsvall.installation.api.validation.ValidCategory;
+import se.sundsvall.installation.api.validation.ValidPagination;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -18,6 +19,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Schema(description = "Search parameters model")
+@ValidPagination
 public class SearchParameters extends PagingAndSortingMetaData {
 
 	@Schema(description = "Category", example = "ELECTRICITY")

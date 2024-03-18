@@ -2,9 +2,9 @@ package se.sundsvall.installation.service.mapper;
 
 import static generated.se.sundsvall.datawarehousereader.Category.ELECTRICITY;
 import static org.assertj.core.api.Assertions.assertThat;
-import static se.sundsvall.installation.TestUtil.createDWRInstallationDetails;
-import static se.sundsvall.installation.TestUtil.createDWRInstallationMetaDataEmbeddable;
+import static se.sundsvall.installation.TestUtil.createInstallationDetails;
 import static se.sundsvall.installation.TestUtil.createInstallationDetailsResponse;
+import static se.sundsvall.installation.TestUtil.createInstallationMetaDataEmbeddable;
 import static se.sundsvall.installation.TestUtil.createSearchParameters;
 
 import java.util.List;
@@ -59,7 +59,7 @@ class MapperTest {
 
 	@Test
 	void toInstallationDetails() {
-		final var dwrDetails = List.of(createDWRInstallationDetails());
+		final var dwrDetails = List.of(createInstallationDetails());
 
 		final var installationDetails = Mapper.toInstallationDetailsList(dwrDetails);
 
@@ -75,7 +75,7 @@ class MapperTest {
 
 	@Test
 	void toInstallationDetail() {
-		final var dwrDetails = createDWRInstallationDetails();
+		final var dwrDetails = createInstallationDetails();
 
 		final var installationDetail = Mapper.toInstallationDetails(dwrDetails);
 
@@ -100,14 +100,15 @@ class MapperTest {
 
 	@Test
 	void toMetaDataEmbeddableTest() {
-		final var dwrMeta = createDWRInstallationMetaDataEmbeddable();
+		final var installationMetaDataEmbeddable = createInstallationMetaDataEmbeddable();
 
-		System.out.println(dwrMeta);
+		final var meta = Mapper.toMetaData(installationMetaDataEmbeddable);
 
-		final var metaData = Mapper.toMetaDataEmbeddable(dwrMeta);
-
-		System.out.println(metaData);
+		assertThat(meta.getKey()).isEqualTo(installationMetaDataEmbeddable.getKey());
+		assertThat(meta.getDisplayName()).isEqualTo(installationMetaDataEmbeddable.getDisplayName());
+		assertThat(meta.getType()).isEqualTo(installationMetaDataEmbeddable.getType());
+		assertThat(meta.getValue()).isEqualTo(installationMetaDataEmbeddable.getValue());
+		assertThat(meta.getCompany()).isEqualTo(installationMetaDataEmbeddable.getCompany());
 	}
-
 
 }

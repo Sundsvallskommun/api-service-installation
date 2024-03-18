@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import se.sundsvall.installation.api.model.Installation;
 import se.sundsvall.installation.api.model.SearchParameters;
 
 import generated.se.sundsvall.datawarehousereader.InstallationDetails;
@@ -36,6 +37,24 @@ public final class TestUtil {
 			.withSortBy(List.of("sortBy"));
 	}
 
+	public static Installation createInstallation() {
+		return Installation.builder()
+			.withCompany("company")
+			.withType("category")
+			.withFacilityId("facilityId")
+			.withPlacementId(123456)
+			.withCareOf("careOf")
+			.withStreet("street")
+			.withPostCode("postalCode")
+			.withCity("city")
+			.withPropertyDesignation("propertyDesignation")
+			.withDateFrom(LocalDate.now())
+			.withDateTo(LocalDate.now())
+			.withDateLastModified(LocalDate.now())
+			.withMetaDataEmbeddables(List.of())
+			.build();
+	}
+
 	public static InstallationDetails createInstallationDetails() {
 		return new InstallationDetails()
 			.company("company")
@@ -53,24 +72,7 @@ public final class TestUtil {
 			.metaData(List.of());
 	}
 
-	public static generated.se.sundsvall.datawarehousereader.InstallationDetails createDWRInstallationDetails() {
-		return new generated.se.sundsvall.datawarehousereader.InstallationDetails()
-			.company("company")
-			.type("category")
-			.facilityId("facilityId")
-			.placementId(123456)
-			.careOf("careOf")
-			.street("street")
-			.postCode("postalCode")
-			.city("city")
-			.propertyDesignation("propertyDesignation")
-			.dateFrom(LocalDate.now())
-			.dateTo(LocalDate.now())
-			.dateLastModified(LocalDate.now())
-			.metaData(List.of());
-	}
-
-	public static InstallationMetaDataEmbeddable createDWRInstallationMetaDataEmbeddable() {
+	public static InstallationMetaDataEmbeddable createInstallationMetaDataEmbeddable() {
 		return new InstallationMetaDataEmbeddable()
 			.key("key")
 			.value("value")

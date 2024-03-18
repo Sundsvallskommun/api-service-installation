@@ -3,7 +3,7 @@ package se.sundsvall.installation.service.mapper;
 import java.util.List;
 import java.util.Optional;
 
-import se.sundsvall.installation.api.model.InstallationDetails;
+import se.sundsvall.installation.api.model.Installation;
 import se.sundsvall.installation.api.model.InstallationsResponse;
 import se.sundsvall.installation.api.model.MetaDataEmbeddable;
 import se.sundsvall.installation.api.model.SearchParameters;
@@ -39,14 +39,14 @@ public final class Mapper {
 			.orElse(null);
 	}
 
-	public static List<InstallationDetails> toInstallationDetailsList(final List<generated.se.sundsvall.datawarehousereader.InstallationDetails> installationDetails) {
+	public static List<Installation> toInstallationDetailsList(final List<generated.se.sundsvall.datawarehousereader.InstallationDetails> installationDetails) {
 		return installationDetails.stream()
 			.map(Mapper::toInstallationDetails)
 			.toList();
 	}
 
-	public static InstallationDetails toInstallationDetails(final generated.se.sundsvall.datawarehousereader.InstallationDetails installationDetails) {
-		return Optional.ofNullable(installationDetails).map(details -> InstallationDetails.builder()
+	public static Installation toInstallationDetails(final generated.se.sundsvall.datawarehousereader.InstallationDetails installationDetails) {
+		return Optional.ofNullable(installationDetails).map(details -> Installation.builder()
 				.withCompany(details.getCompany())
 				.withCareOf(details.getCareOf())
 				.withCity(details.getCity())
@@ -58,13 +58,13 @@ public final class Mapper {
 				.withDateLastModified(details.getDateLastModified())
 				.withPropertyDesignation(details.getPropertyDesignation())
 				.withPostCode(details.getPostCode())
-				.withMetaData(toMetaDataEmbeddables(details.getMetaData()))
+				.withMetaDataEmbeddables(toMetaDataList(details.getMetaData()))
 				.withPlacementId(details.getPlacementId())
 				.build())
 			.orElse(null);
 	}
 
-	public static MetaDataEmbeddable toMetaDataEmbeddable(final InstallationMetaDataEmbeddable metaData) {
+	public static MetaDataEmbeddable toMetaData(final InstallationMetaDataEmbeddable metaData) {
 		return Optional.ofNullable(metaData).map(data -> MetaDataEmbeddable.builder()
 				.withKey(data.getKey())
 				.withDisplayName(data.getDisplayName())
@@ -73,11 +73,12 @@ public final class Mapper {
 				.withCompany(data.getCompany())
 				.build())
 			.orElse(null);
+
 	}
 
-	public static List<MetaDataEmbeddable> toMetaDataEmbeddables(final List<InstallationMetaDataEmbeddable> metaData) {
+	public static List<MetaDataEmbeddable> toMetaDataList(final List<InstallationMetaDataEmbeddable> metaData) {
 		return metaData.stream()
-			.map(Mapper::toMetaDataEmbeddable)
+			.map(Mapper::toMetaData)
 			.toList();
 	}
 

@@ -6,10 +6,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-@Setter
+
 @Getter
+@Setter
 @Builder(setterPrefix = "with")
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class MetaDataEmbeddable {
@@ -26,7 +29,6 @@ public class MetaDataEmbeddable {
 	@Schema(description = "Type", accessMode = Schema.AccessMode.READ_ONLY)
 	private String type;
 
-	@Schema(description = "Displayname", accessMode = Schema.AccessMode.READ_ONLY)
+	@Schema(description = "Display Name", accessMode = Schema.AccessMode.READ_ONLY)
 	private String displayName;
-
 }

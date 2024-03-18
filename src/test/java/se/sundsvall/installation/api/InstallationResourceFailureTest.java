@@ -47,7 +47,7 @@ class InstallationResourceFailureTest {
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("page", "must be greater than or equal to 1"));
+			tuple("page", "page must be greater or equal to 1"));
 
 		verifyNoInteractions(installationServiceMock);
 	}
@@ -69,7 +69,7 @@ class InstallationResourceFailureTest {
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("limit", "must be greater than or equal to 1"));
+			tuple("limit", "limit must be between 1 and 1000"));
 
 		verifyNoInteractions(installationServiceMock);
 	}
@@ -91,7 +91,7 @@ class InstallationResourceFailureTest {
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("limit", "must be less than or equal to 1000"));
+			tuple("limit", "limit must be between 1 and 1000"));
 
 		verifyNoInteractions(installationServiceMock);
 	}

@@ -45,7 +45,6 @@ class InstallationServiceTest {
 			assertThat(bean.getLimit()).isEqualTo(searchParameters.getLimit());
 			assertThat(bean.getPage()).isEqualTo(searchParameters.getPage());
 			assertThat(bean.getSortBy()).isEqualTo(searchParameters.getSortBy());
-			assertThat(bean.getSortDirection()).isEqualTo(searchParameters.getSortDirection());
 		});
 
 		verifyNoMoreInteractions(dataWarehouseReaderClient);

@@ -12,16 +12,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @Builder(setterPrefix = "with")
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class InstallationsResponse {
 
-	@ArraySchema(schema = @Schema(implementation = InstallationDetails.class, accessMode = READ_ONLY))
-	private List<InstallationDetails> installationDetails;
+	@ArraySchema(schema = @Schema(implementation = Installation.class, accessMode = READ_ONLY))
+	private List<Installation> installationDetails;
 
 	@Schema(description = "Paging and sorting metadata", accessMode = READ_ONLY)
 	private PagingAndSortingMetaData meta;

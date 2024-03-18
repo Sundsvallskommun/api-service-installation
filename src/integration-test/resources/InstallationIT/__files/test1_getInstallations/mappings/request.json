@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/api-datawarehousereader?installed=false&sortDirection=ASC&facilityId=123&limit=10&sortBy=facilityId&page=1&category=ELECTRICITY&dateFrom=2022-01-01"
+    "url": "/api-datawarehousereader?installed=false&facilityId=123&limit=10&sortBy=facilityId&page=1&category=ELECTRICITY&dateFrom=2022-01-01"
   },
   "response": {
     "headers": {
@@ -11,3 +11,5 @@
     "bodyFileName": "test1_getInstallations/responses/dwr-response.json"
   }
 }
+
+
