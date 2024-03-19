@@ -23,7 +23,7 @@
       "type": "ELECTRICITY"
     }
   ],
-  "meta": {
+  "_meta": {
     "count": 1,
     "limit": 10,
     "page": 1,
