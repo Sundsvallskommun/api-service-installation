@@ -18,6 +18,7 @@ import se.sundsvall.installation.api.model.SearchParameters;
 import generated.se.sundsvall.datawarehousereader.InstallationDetails;
 import generated.se.sundsvall.datawarehousereader.InstallationDetailsResponse;
 import generated.se.sundsvall.datawarehousereader.InstallationMetaDataEmbeddable;
+import generated.se.sundsvall.datawarehousereader.PagingAndSortingMetaData;
 
 public final class TestUtil {
 
@@ -51,7 +52,7 @@ public final class TestUtil {
 			.withDateFrom(LocalDate.now())
 			.withDateTo(LocalDate.now())
 			.withDateLastModified(LocalDate.now())
-			.withMetaDataEmbeddables(List.of())
+			.withMetaData(List.of())
 			.build();
 	}
 
@@ -105,6 +106,17 @@ public final class TestUtil {
 		ofNullable(searchParameters.getSortDirection()).ifPresent(p -> parameters.add("sortDirection", String.valueOf(p)));
 		ofNullable(searchParameters.getSortBy()).ifPresent(p -> p.forEach(sortBy -> parameters.add("sortBy", sortBy)));
 		return parameters;
+	}
+
+	public static PagingAndSortingMetaData createPagingAndSortingMetaData() {
+		return new PagingAndSortingMetaData()
+			.page(1)
+			.limit(10)
+			.count(10)
+			.totalPages(10)
+			.totalRecords(100L)
+			.sortBy(List.of("sortBy"))
+			.sortDirection(generated.se.sundsvall.datawarehousereader.Direction.ASC);
 	}
 
 }

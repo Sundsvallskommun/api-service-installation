@@ -29,7 +29,7 @@ class ValidPaginationConstraintValidatorTest {
 	private ConstraintValidatorContext.ConstraintViolationBuilder.NodeBuilderCustomizableContext nodeBuilderCustomizableContext;
 
 	@ParameterizedTest
-	@ValueSource(ints = {1, 50, 100})
+	@ValueSource(ints = {1, 50, 1000})
 	void validLimitAndPage(final int variables) {
 		assertThat(validator.isValid((SearchParameters) SearchParameters.create()
 			.withLimit(variables).withPage(variables), context)).isTrue();

@@ -5,7 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static se.sundsvall.installation.TestUtil.createInstallationDetails;
 import static se.sundsvall.installation.TestUtil.createInstallationDetailsResponse;
 import static se.sundsvall.installation.TestUtil.createInstallationMetaDataEmbeddable;
+import static se.sundsvall.installation.TestUtil.createPagingAndSortingMetaData;
 import static se.sundsvall.installation.TestUtil.createSearchParameters;
+import static se.sundsvall.installation.service.mapper.Mapper.toPagingAndSortingMetaData;
 
 import java.util.List;
 
@@ -109,6 +111,21 @@ class MapperTest {
 		assertThat(meta.getType()).isEqualTo(installationMetaDataEmbeddable.getType());
 		assertThat(meta.getValue()).isEqualTo(installationMetaDataEmbeddable.getValue());
 		assertThat(meta.getCompany()).isEqualTo(installationMetaDataEmbeddable.getCompany());
+	}
+
+	@Test
+	void toPagingAndSortingMetaDataTest() {
+
+		final var pagingAndSorting = createPagingAndSortingMetaData();
+
+		final var result = toPagingAndSortingMetaData(pagingAndSorting);
+
+		assertThat(result.getPage()).isEqualTo(pagingAndSorting.getPage());
+		assertThat(result.getLimit()).isEqualTo(pagingAndSorting.getLimit());
+		assertThat(result.getCount()).isEqualTo(pagingAndSorting.getCount());
+		assertThat(result.getTotalRecords()).isEqualTo(pagingAndSorting.getTotalRecords());
+		assertThat(result.getTotalPages()).isEqualTo(pagingAndSorting.getTotalPages());
+		assertThat(result.getSortBy()).isEqualTo(pagingAndSorting.getSortBy());
 	}
 
 }

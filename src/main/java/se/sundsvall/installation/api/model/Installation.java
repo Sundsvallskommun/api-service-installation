@@ -61,5 +61,5 @@ public class Installation {
 	private LocalDate dateLastModified;
 
 	@Schema(description = "Meta data", accessMode = Schema.AccessMode.READ_ONLY)
-	private List<MetaDataEmbeddable> metaDataEmbeddables;
+	private List<MetaData> metaData;
 }

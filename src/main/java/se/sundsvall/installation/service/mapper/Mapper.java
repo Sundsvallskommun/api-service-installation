@@ -3,9 +3,12 @@ package se.sundsvall.installation.service.mapper;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Sort.Direction;
+
+import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 import se.sundsvall.installation.api.model.Installation;
 import se.sundsvall.installation.api.model.InstallationsResponse;
-import se.sundsvall.installation.api.model.MetaDataEmbeddable;
+import se.sundsvall.installation.api.model.MetaData;
 import se.sundsvall.installation.api.model.SearchParameters;
 
 import generated.se.sundsvall.datawarehousereader.Category;
@@ -34,8 +37,20 @@ public final class Mapper {
 	public static InstallationsResponse toInstallationsResponse(final InstallationDetailsResponse response) {
 		return Optional.ofNullable(response).map(response1 -> InstallationsResponse.builder()
 				.withInstallationDetails(toInstallationDetailsList(response.getInstallationDetails()))
-				.withMeta(response.getMeta())
+				.withMeta(toPagingAndSortingMetaData(response.getMeta()))
 				.build())
+			.orElse(null);
+	}
+
+	public static PagingAndSortingMetaData toPagingAndSortingMetaData(final generated.se.sundsvall.datawarehousereader.PagingAndSortingMetaData meta) {
+		return Optional.ofNullable(meta).map(meta1 -> PagingAndSortingMetaData.create()
+				.withPage(meta.getPage())
+				.withLimit(meta.getLimit())
+				.withCount(meta.getCount())
+				.withTotalRecords(meta.getTotalRecords())
+				.withTotalPages(meta.getTotalPages())
+				.withSortBy(meta.getSortBy())
+				.withSortDirection(Direction.fromOptionalString(String.valueOf(meta.getSortDirection())).orElse(Direction.ASC)))
 			.orElse(null);
 	}
 
@@ -58,14 +73,14 @@ public final class Mapper {
 				.withDateLastModified(details.getDateLastModified())
 				.withPropertyDesignation(details.getPropertyDesignation())
 				.withPostCode(details.getPostCode())
-				.withMetaDataEmbeddables(toMetaDataList(details.getMetaData()))
+				.withMetaData(toMetaDataList(details.getMetaData()))
 				.withPlacementId(details.getPlacementId())
 				.build())
 			.orElse(null);
 	}
 
-	public static MetaDataEmbeddable toMetaData(final InstallationMetaDataEmbeddable metaData) {
-		return Optional.ofNullable(metaData).map(data -> MetaDataEmbeddable.builder()
+	public static MetaData toMetaData(final InstallationMetaDataEmbeddable metaData) {
+		return Optional.ofNullable(metaData).map(data -> MetaData.builder()
 				.withKey(data.getKey())
 				.withDisplayName(data.getDisplayName())
 				.withType(data.getType())
@@ -76,7 +91,7 @@ public final class Mapper {
 
 	}
 
-	public static List<MetaDataEmbeddable> toMetaDataList(final List<InstallationMetaDataEmbeddable> metaData) {
+	public static List<MetaData> toMetaDataList(final List<InstallationMetaDataEmbeddable> metaData) {
 		return metaData.stream()
 			.map(Mapper::toMetaData)
 			.toList();

@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "1"
 servers:
-  - url: http://localhost:58376
+  - url: http://localhost:56747
     description: Generated server url
 paths:
   /installations:
@@ -125,18 +125,6 @@ paths:
             example: 23
           example: 23
       responses:
-        "500":
-          description: Internal Server error
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
-        "502":
-          description: Bad Gateway
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
         "200":
           description: Successful operation
           content:
@@ -146,6 +134,12 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/InstallationsResponse'
+        "502":
+          description: Bad Gateway
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
         "400":
           description: Bad request
           content:
@@ -154,6 +148,12 @@ paths:
                 oneOf:
                   - $ref: '#/components/schemas/Problem'
                   - $ref: '#/components/schemas/ConstraintViolationProblem'
+        "500":
+          description: Internal Server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
   /api-docs:
     get:
       tags:
@@ -187,9 +187,9 @@ components:
             type: object
         status:
           $ref: '#/components/schemas/StatusType'
-        detail:
-          type: string
         title:
+          type: string
+        detail:
           type: string
     StatusType:
       type: object
@@ -322,9 +322,9 @@ components:
             type: object
         status:
           $ref: '#/components/schemas/StatusType'
-        detail:
-          type: string
         title:
+          type: string
+        detail:
           type: string
         suppressed:
           type: array
@@ -366,6 +366,13 @@ components:
           type: string
         message:
           type: string
+    Direction:
+      type: string
+      description: The sort order direction
+      example: ASC
+      enum:
+        - ASC
+        - DESC
     Installation:
       type: object
       properties:
@@ -421,12 +428,12 @@ components:
           description: Date when object was last modified
           format: date
           readOnly: true
-        metaDataEmbeddables:
+        metaData:
           type: array
           description: Meta data
           readOnly: true
           items:
-            $ref: '#/components/schemas/MetaDataEmbeddable'
+            $ref: '#/components/schemas/MetaData'
       readOnly: true
     InstallationsResponse:
       type: object
@@ -438,7 +445,7 @@ components:
             $ref: '#/components/schemas/Installation'
         meta:
           $ref: '#/components/schemas/PagingAndSortingMetaData'
-    MetaDataEmbeddable:
+    MetaData:
       type: object
       properties:
         company:
@@ -501,12 +508,11 @@ components:
           readOnly: true
           items:
             type: string
+            description: The properties to sort by
             readOnly: true
+            example: property
         sortDirection:
-          type: string
-          enum:
-            - ASC
-            - DESC
+          $ref: '#/components/schemas/Direction'
       description: PagingAndSortingMetaData model
       readOnly: true
   securitySchemes: { }

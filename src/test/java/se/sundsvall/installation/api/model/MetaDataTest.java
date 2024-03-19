@@ -9,11 +9,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class MetaDataEmbeddableTest {
+class MetaDataTest {
 
 	@Test
 	void testBean() {
-		assertThat(MetaDataEmbeddable.class, allOf(
+		assertThat(MetaData.class, allOf(
 			hasValidBeanConstructor(),
 			hasValidBeanToString(),
 			hasValidGettersAndSetters()));
@@ -21,7 +21,7 @@ class MetaDataEmbeddableTest {
 
 	@Test
 	void testBuilder() {
-		final var metaData = MetaDataEmbeddable.builder()
+		final var metaData = MetaData.builder()
 			.withKey("key")
 			.withValue("value")
 			.withCompany("company")
@@ -39,10 +39,10 @@ class MetaDataEmbeddableTest {
 
 	@Test
 	void testNoDirtOnCreatedBean() {
-		Assertions.assertThat(MetaDataEmbeddable.builder().build())
+		Assertions.assertThat(MetaData.builder().build())
 			.hasAllNullFieldsOrProperties();
 
-		Assertions.assertThat(new MetaDataEmbeddable())
+		Assertions.assertThat(new MetaData())
 			.hasAllNullFieldsOrProperties();
 	}
 }

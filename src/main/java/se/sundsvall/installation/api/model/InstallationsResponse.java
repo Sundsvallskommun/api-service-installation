@@ -4,7 +4,8 @@ import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 import java.util.List;
 
-import generated.se.sundsvall.datawarehousereader.PagingAndSortingMetaData;
+import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
+
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

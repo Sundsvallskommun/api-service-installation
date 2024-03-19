@@ -8,7 +8,7 @@
       "dateLastModified": "2022-06-01",
       "dateTo": "2023-01-01",
       "facilityId": "691071",
-      "metaDataEmbeddables": [
+      "metaData": [
         {
           "company": "test",
           "displayName": "test",
@@ -27,6 +27,7 @@
     "count": 1,
     "limit": 10,
     "page": 1,
+    "sortDirection": "ASC",
     "totalPages": 1,
     "totalRecords": 1
   }

@@ -34,7 +34,7 @@ class InstallationTest {
 	void testBuilder() {
 		final var now = LocalDate.now();
 
-		final var metaData = new MetaDataEmbeddable();
+		final var metaData = new MetaData();
 
 		final var installation = Installation.builder()
 			.withCompany("company")
@@ -49,7 +49,7 @@ class InstallationTest {
 			.withDateFrom(now)
 			.withDateTo(now)
 			.withDateLastModified(now)
-			.withMetaDataEmbeddables(List.of(metaData))
+			.withMetaData(List.of(metaData))
 			.build();
 
 		Assertions.assertThat(installation).isNotNull().hasNoNullFieldsOrProperties();
@@ -65,7 +65,7 @@ class InstallationTest {
 		Assertions.assertThat(installation.getDateFrom()).isEqualTo(now);
 		Assertions.assertThat(installation.getDateTo()).isEqualTo(now);
 		Assertions.assertThat(installation.getDateLastModified()).isEqualTo(now);
-		Assertions.assertThat(installation.getMetaDataEmbeddables()).isEqualTo(List.of(metaData));
+		Assertions.assertThat(installation.getMetaData()).isEqualTo(List.of(metaData));
 	}
 
 	@Test

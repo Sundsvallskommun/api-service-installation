@@ -8,14 +8,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Getter
 @Setter
 @Builder(setterPrefix = "with")
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class MetaDataEmbeddable {
+public class MetaData {
 
 	@Schema(description = "Company name", accessMode = Schema.AccessMode.READ_ONLY)
 	private String company;
