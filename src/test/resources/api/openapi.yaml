@@ -1,0 +1,518 @@
+openapi: 3.0.1
+info:
+  title: api-service-installation
+  contact: { }
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
+  version: "1"
+servers:
+  - url: http://localhost:63500
+    description: Generated server url
+paths:
+  /installations:
+    get:
+      tags:
+        - Installation
+      summary: Get uninstalled installations
+      description: Resource returns all uninstalled installations matching provided
+        search parameters
+      operationId: getInstallations
+      parameters:
+        - name: category
+          in: query
+          description: Category
+          required: false
+          schema:
+            type: string
+            description: Category
+            example: ELECTRICITY
+          example: ELECTRICITY
+        - name: facilityId
+          in: query
+          description: Facility id
+          required: false
+          schema:
+            type: string
+            description: Facility id
+            example: 123456789132456789
+          example: 123456789132456789
+        - name: installed
+          in: query
+          description: Is the installation installed
+          required: false
+          schema:
+            type: string
+            description: Is the installation installed
+            example: true
+          example: true
+        - name: dateFrom
+          in: query
+          description: Last changed date. Format is YYYY-MM-DD.
+          required: false
+          schema:
+            type: string
+            description: Last changed date. Format is YYYY-MM-DD.
+            example: 2022-01-01
+          example: 2022-01-01
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              description: The properties to sort by
+              readOnly: true
+              example: property
+        - name: sortDirection
+          in: query
+          description: The sort order direction
+          required: false
+          schema:
+            type: string
+            description: The sort order direction
+            example: ASC
+          example: ASC
+        - name: page
+          in: query
+          description: Current page
+          required: false
+          schema:
+            type: string
+            description: Current page
+            readOnly: true
+            example: 5
+          example: 5
+        - name: limit
+          in: query
+          description: Displayed objects per page
+          required: false
+          schema:
+            type: string
+            description: Displayed objects per page
+            readOnly: true
+            example: 20
+          example: 20
+        - name: count
+          in: query
+          description: Displayed objects on current page
+          required: false
+          schema:
+            type: string
+            description: Displayed objects on current page
+            readOnly: true
+            example: 13
+          example: 13
+        - name: totalRecords
+          in: query
+          description: Total amount of hits based on provided search parameters
+          required: false
+          schema:
+            type: string
+            description: Total amount of hits based on provided search parameters
+            readOnly: true
+            example: 98
+          example: 98
+        - name: totalPages
+          in: query
+          description: Total amount of pages based on provided search parameters
+          required: false
+          schema:
+            type: string
+            description: Total amount of pages based on provided search parameters
+            readOnly: true
+            example: 23
+          example: 23
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstallationsResponse'
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/InstallationsResponse'
+        "500":
+          description: Internal Server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        "400":
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Problem'
+                  - $ref: '#/components/schemas/ConstraintViolationProblem'
+        "502":
+          description: Bad Gateway
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+  /api-docs:
+    get:
+      tags:
+        - API
+      summary: OpenAPI
+      operationId: getApiDocs
+      responses:
+        "200":
+          description: OK
+          content:
+            application/yaml:
+              schema:
+                type: string
+      x-auth-type: None
+      x-throttling-tier: Unlimited
+      x-wso2-mutual-ssl: Optional
+components:
+  schemas:
+    Problem:
+      type: object
+      properties:
+        title:
+          type: string
+        detail:
+          type: string
+        instance:
+          type: string
+          format: uri
+        type:
+          type: string
+          format: uri
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        status:
+          $ref: '#/components/schemas/StatusType'
+    StatusType:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+        reasonPhrase:
+          type: string
+    ConstraintViolationProblem:
+      type: object
+      properties:
+        cause:
+          $ref: '#/components/schemas/ThrowableProblem'
+        stackTrace:
+          type: array
+          items:
+            type: object
+            properties:
+              classLoaderName:
+                type: string
+              moduleName:
+                type: string
+              moduleVersion:
+                type: string
+              methodName:
+                type: string
+              fileName:
+                type: string
+              lineNumber:
+                type: integer
+                format: int32
+              className:
+                type: string
+              nativeMethod:
+                type: boolean
+        type:
+          type: string
+          format: uri
+        status:
+          $ref: '#/components/schemas/StatusType'
+        violations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Violation'
+        title:
+          type: string
+        message:
+          type: string
+        detail:
+          type: string
+        instance:
+          type: string
+          format: uri
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        suppressed:
+          type: array
+          items:
+            type: object
+            properties:
+              stackTrace:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    classLoaderName:
+                      type: string
+                    moduleName:
+                      type: string
+                    moduleVersion:
+                      type: string
+                    methodName:
+                      type: string
+                    fileName:
+                      type: string
+                    lineNumber:
+                      type: integer
+                      format: int32
+                    className:
+                      type: string
+                    nativeMethod:
+                      type: boolean
+              message:
+                type: string
+              localizedMessage:
+                type: string
+        localizedMessage:
+          type: string
+    ThrowableProblem:
+      type: object
+      properties:
+        cause:
+          $ref: '#/components/schemas/ThrowableProblem'
+        stackTrace:
+          type: array
+          items:
+            type: object
+            properties:
+              classLoaderName:
+                type: string
+              moduleName:
+                type: string
+              moduleVersion:
+                type: string
+              methodName:
+                type: string
+              fileName:
+                type: string
+              lineNumber:
+                type: integer
+                format: int32
+              className:
+                type: string
+              nativeMethod:
+                type: boolean
+        message:
+          type: string
+        title:
+          type: string
+        detail:
+          type: string
+        instance:
+          type: string
+          format: uri
+        type:
+          type: string
+          format: uri
+        parameters:
+          type: object
+          additionalProperties:
+            type: object
+        status:
+          $ref: '#/components/schemas/StatusType'
+        suppressed:
+          type: array
+          items:
+            type: object
+            properties:
+              stackTrace:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    classLoaderName:
+                      type: string
+                    moduleName:
+                      type: string
+                    moduleVersion:
+                      type: string
+                    methodName:
+                      type: string
+                    fileName:
+                      type: string
+                    lineNumber:
+                      type: integer
+                      format: int32
+                    className:
+                      type: string
+                    nativeMethod:
+                      type: boolean
+              message:
+                type: string
+              localizedMessage:
+                type: string
+        localizedMessage:
+          type: string
+    Violation:
+      type: object
+      properties:
+        field:
+          type: string
+        message:
+          type: string
+    Direction:
+      type: string
+      description: The sort order direction
+      example: ASC
+      enum:
+        - ASC
+        - DESC
+    Installation:
+      type: object
+      properties:
+        company:
+          type: string
+          description: Company name
+          readOnly: true
+        type:
+          type: string
+          description: Type
+          readOnly: true
+        facilityId:
+          type: string
+          description: Facility id
+          readOnly: true
+        placementId:
+          type: integer
+          description: Placement id
+          format: int32
+          readOnly: true
+        careOf:
+          type: string
+          description: Care of address
+          readOnly: true
+        street:
+          type: string
+          description: Street
+          readOnly: true
+        postCode:
+          type: string
+          description: Postal code
+          readOnly: true
+        city:
+          type: string
+          description: City
+          readOnly: true
+        propertyDesignation:
+          type: string
+          description: Property designation
+          readOnly: true
+        dateFrom:
+          type: string
+          description: From date
+          format: date
+          readOnly: true
+        dateTo:
+          type: string
+          description: To date
+          format: date
+          readOnly: true
+        dateLastModified:
+          type: string
+          description: Date when object was last modified
+          format: date
+          readOnly: true
+        metaData:
+          type: array
+          description: Meta data
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/MetaData'
+      readOnly: true
+    InstallationsResponse:
+      type: object
+      properties:
+        installationDetails:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Installation'
+        _meta:
+          $ref: '#/components/schemas/PagingAndSortingMetaData'
+    MetaData:
+      type: object
+      properties:
+        company:
+          type: string
+          description: Company name
+          readOnly: true
+        key:
+          type: string
+          description: Key
+          readOnly: true
+        value:
+          type: string
+          description: Value
+          readOnly: true
+        type:
+          type: string
+          description: Type
+          readOnly: true
+        displayName:
+          type: string
+          description: Display Name
+          readOnly: true
+      description: Meta data
+      readOnly: true
+    PagingAndSortingMetaData:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: Current page
+          format: int32
+          readOnly: true
+          example: 5
+        limit:
+          type: integer
+          description: Displayed objects per page
+          format: int32
+          readOnly: true
+          example: 20
+        count:
+          type: integer
+          description: Displayed objects on current page
+          format: int32
+          readOnly: true
+          example: 13
+        totalRecords:
+          type: integer
+          description: Total amount of hits based on provided search parameters
+          format: int64
+          readOnly: true
+          example: 98
+        totalPages:
+          type: integer
+          description: Total amount of pages based on provided search parameters
+          format: int32
+          readOnly: true
+          example: 23
+        sortBy:
+          type: array
+          readOnly: true
+          items:
+            type: string
+            description: The properties to sort by
+            readOnly: true
+            example: property
+        sortDirection:
+          $ref: '#/components/schemas/Direction'
+      description: PagingAndSortingMetaData model
+      readOnly: true
+  securitySchemes: { }

@@ -1,18 +1,10 @@
 config:
   integration:
     datawarehousereader:
-      url: http://localhost:${wiremock.server.port}/api-datawarehousereader
-  spring:
-    security:
-      oauth2:
-        client:
-          provider:
-            datawarehousereader:
-              token-uri: http://localhost:${wiremock.server.port:}/api-gateway/token
-          registration:
-            datawarehousereader:
-              client-id: the-client-id
-              client-secret: the-client-secret
+      base-url: http://localhost:${wiremock.server.port}/api-datawarehousereader
+      token-url: http://localhost:${wiremock.server.port}/token
+      client-id: someClientId
+      client-secret: someClientSecret
 logging:
   level:
-    root: DEBUG
+    root: INFO
