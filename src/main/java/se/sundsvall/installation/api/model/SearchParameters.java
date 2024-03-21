@@ -10,11 +10,13 @@ import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBa
 import se.sundsvall.installation.api.validation.ValidCategory;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper = true)
 @Schema(description = "Search parameters model")
 public class SearchParameters extends AbstractParameterPagingAndSortingBase {
 
