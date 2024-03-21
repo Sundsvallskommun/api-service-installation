@@ -1,7 +1,7 @@
 {
   "request": {
     "method": "GET",
-    "url": "/api-datawarehousereader?installed=false&facilityId=123&limit=10&sortBy=facilityId&page=1&category=ELECTRICITY&dateFrom=2022-01-01"
+    "url": "/api-datawarehousereader?installed=false&facilityId=123&limit=12&sortBy=ASC&page=1&category=ELECTRICITY&dateFrom=2022-01-01"
   },
   "response": {
     "headers": {

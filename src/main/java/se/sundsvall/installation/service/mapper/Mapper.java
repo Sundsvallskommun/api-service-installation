@@ -29,8 +29,8 @@ public final class Mapper {
 				.category(Optional.ofNullable(searchParams.getCategory()).map(Category::fromValue).orElse(null))
 				.facilityId(searchParams.getFacilityId())
 				.page(searchParams.getPage())
-				.limit(searchParams.getLimit())
-				.sortBy(searchParams.getSortBy()))
+				.limit(searchParams.getSize())
+				.sortBy(searchParams.getSort()))
 			.orElse(null);
 	}
 

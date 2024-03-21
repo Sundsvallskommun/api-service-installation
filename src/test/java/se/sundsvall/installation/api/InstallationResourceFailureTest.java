@@ -32,7 +32,7 @@ class InstallationResourceFailureTest {
 
 	@Test
 	void getInstallations_PageLessThanMinimum() {
-		final var searchParameters = createSearchParameters(sp -> sp.setPage(0));
+		final var searchParameters = createSearchParameters(sp -> sp.setPage(-1));
 		final var parameterObject = createParameterMap(searchParameters);
 
 		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installations").queryParams(parameterObject).build())
@@ -47,14 +47,14 @@ class InstallationResourceFailureTest {
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("page", "page must be greater or equal to 1"));
+			tuple("page", "must be greater than or equal to 0"));
 
 		verifyNoInteractions(installationServiceMock);
 	}
 
 	@Test
-	void getInstallations_LimitLessThanMinimum() {
-		final var searchParameters = createSearchParameters(sp -> sp.setLimit(0));
+	void getInstallations_SizeLessThanMinimum() {
+		final var searchParameters = createSearchParameters(sp -> sp.setSize(0));
 		final var parameterObject = createParameterMap(searchParameters);
 
 		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installations").queryParams(parameterObject).build())
@@ -69,29 +69,7 @@ class InstallationResourceFailureTest {
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("limit", "limit must be between 1 and 1000"));
-
-		verifyNoInteractions(installationServiceMock);
-	}
-
-	@Test
-	void getInstallations_LimitGreaterThanMaximum() {
-		final var searchParameters = createSearchParameters(sp -> sp.setLimit(1001));
-		final var parameterObject = createParameterMap(searchParameters);
-
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installations").queryParams(parameterObject).build())
-			.exchange()
-			.expectStatus().isBadRequest()
-			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
-			.expectBody(ConstraintViolationProblem.class)
-			.returnResult()
-			.getResponseBody();
-
-		assertThat(response).isNotNull();
-		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
-		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
-		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("limit", "limit must be between 1 and 1000"));
+			tuple("size", "must be greater than or equal to 1"));
 
 		verifyNoInteractions(installationServiceMock);
 	}

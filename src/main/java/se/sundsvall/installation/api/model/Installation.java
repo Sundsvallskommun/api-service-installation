@@ -62,4 +62,5 @@ public class Installation {
 
 	@Schema(description = "Meta data", accessMode = Schema.AccessMode.READ_ONLY)
 	private List<MetaData> metaData;
+
 }

@@ -3,24 +3,27 @@ package se.sundsvall.installation.api.model;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.data.domain.Sort;
+import jakarta.validation.constraints.Min;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
-import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 import se.sundsvall.installation.api.validation.ValidCategory;
-import se.sundsvall.installation.api.validation.ValidPagination;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@Getter
+@Setter
+@Builder(setterPrefix = "with")
+@NoArgsConstructor
+@AllArgsConstructor
 @Schema(description = "Search parameters model")
-@ValidPagination
-public class SearchParameters extends PagingAndSortingMetaData {
+public class SearchParameters {
 
 	@Schema(description = "Category", example = "ELECTRICITY")
 	@ValidCategory
@@ -36,40 +39,15 @@ public class SearchParameters extends PagingAndSortingMetaData {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate dateFrom;
 
-	public static SearchParameters create() {
-		return new SearchParameters();
-	}
+	@Min(0)
+	@Schema(description = "Zero-based page index (0..N)", example = "0")
+	private Integer page;
 
-	@Override
-	public SearchParameters withSortBy(final List<String> sortBy) {
-		super.setSortBy(sortBy);
-		return this;
-	}
+	@Min(1)
+	@Schema(description = "The size of the page to be returned", example = "20")
+	private Integer size;
 
-	@Override
-	public SearchParameters withSortDirection(final Sort.Direction sortDirection) {
-		super.setSortDirection(sortDirection);
-		return this;
-	}
-
-	public SearchParameters withCategory(final String category) {
-		this.category = category;
-		return this;
-	}
-
-	public SearchParameters withFacilityId(final String facilityId) {
-		this.facilityId = facilityId;
-		return this;
-	}
-
-	public SearchParameters withInstalled(final Boolean installed) {
-		this.installed = installed;
-		return this;
-	}
-
-	public SearchParameters withDateFrom(final LocalDate dateFrom) {
-		this.dateFrom = dateFrom;
-		return this;
-	}
+	@ArraySchema(schema = @Schema(description = "Sort by, asc|desc", example = "asc", implementation = String.class))
+	private List<String> sort;
 
 }

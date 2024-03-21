@@ -28,8 +28,8 @@ class MapperTest {
 		assertThat(installationParameters.getCategory()).isEqualTo(ELECTRICITY);
 		assertThat(installationParameters.getFacilityId()).isEqualTo(searchParameters.getFacilityId());
 		assertThat(installationParameters.getPage()).isEqualTo(searchParameters.getPage());
-		assertThat(installationParameters.getLimit()).isEqualTo(searchParameters.getLimit());
-		assertThat(installationParameters.getSortBy()).isEqualTo(searchParameters.getSortBy());
+		assertThat(installationParameters.getLimit()).isEqualTo(searchParameters.getSize());
+		assertThat(installationParameters.getSortBy()).isEqualTo(searchParameters.getSort());
 	}
 
 	@Test
@@ -39,7 +39,7 @@ class MapperTest {
 
 	@Test
 	void toInstallationParametersFromEmptyParameters() {
-		final var bean = Mapper.toInstallationParameters(SearchParameters.create());
+		final var bean = Mapper.toInstallationParameters(SearchParameters.builder().build());
 
 		assertThat(bean).hasAllNullFieldsOrPropertiesExcept("page", "limit");
 	}
