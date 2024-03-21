@@ -42,9 +42,10 @@ class InstallationServiceTest {
 			assertThat(bean.getDateFrom()).isEqualTo(searchParameters.getDateFrom());
 			assertThat(bean.getFacilityId()).isEqualTo(searchParameters.getFacilityId());
 			assertThat(bean.getInstalled()).isEqualTo(searchParameters.getInstalled());
-			assertThat(bean.getLimit()).isEqualTo(searchParameters.getSize());
+
+			assertThat(bean.getLimit()).isEqualTo(searchParameters.getLimit());
 			assertThat(bean.getPage()).isEqualTo(searchParameters.getPage());
-			assertThat(bean.getSortBy()).isEqualTo(searchParameters.getSort());
+			assertThat(bean.getSortBy()).isEqualTo(searchParameters.getSortBy());
 		});
 
 		verifyNoMoreInteractions(dataWarehouseReaderClient);

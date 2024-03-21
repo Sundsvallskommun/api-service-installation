@@ -13,6 +13,7 @@ import com.google.code.beanmatchers.BeanMatchers;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Sort;
 
 class SearchParametersTest {
 
@@ -36,33 +37,34 @@ class SearchParametersTest {
 		final var dateFrom = LocalDate.MIN;
 
 
-		final SearchParameters searchParameters = SearchParameters.builder()
+		final SearchParameters searchParameters = SearchParameters.create()
 			.withInstalled(installed)
 			.withCategory(category)
 			.withFacilityId(facilityId)
 			.withDateFrom(dateFrom)
-			.withPage(0)
-			.withSize(1)
-			.withSort(List.of("asc"))
-			.build();
+			.withPage(1)
+			.withLimit(1)
+			.withSortBy(List.of("asc"))
+			.withSortDirection(Sort.Direction.ASC);
 
 		Assertions.assertThat(searchParameters).isNotNull().hasNoNullFieldsOrProperties();
 		Assertions.assertThat(searchParameters.getInstalled()).isEqualTo(installed);
 		Assertions.assertThat(searchParameters.getCategory()).isEqualTo(category);
 		Assertions.assertThat(searchParameters.getFacilityId()).isEqualTo(facilityId);
 		Assertions.assertThat(searchParameters.getDateFrom()).isEqualTo(dateFrom);
-		Assertions.assertThat(searchParameters.getPage()).isEqualTo(0);
-		Assertions.assertThat(searchParameters.getSize()).isEqualTo(1);
-		Assertions.assertThat(searchParameters.getSort()).isEqualTo(List.of("asc"));
+		Assertions.assertThat(searchParameters.getPage()).isEqualTo(1);
+		Assertions.assertThat(searchParameters.getLimit()).isEqualTo(1);
+		Assertions.assertThat(searchParameters.getSortBy()).isEqualTo(List.of("asc"));
+		Assertions.assertThat(searchParameters.getSortDirection()).isEqualTo(Sort.Direction.ASC);
 	}
 
 	@Test
 	void testNoDirtOnCreatedBean() {
-		Assertions.assertThat(SearchParameters.builder().build())
-			.hasAllNullFieldsOrProperties();
+		Assertions.assertThat(SearchParameters.create())
+			.hasAllNullFieldsOrPropertiesExcept("page", "limit", "sortDirection");
 
 		Assertions.assertThat(new SearchParameters())
-			.hasAllNullFieldsOrProperties();
+			.hasAllNullFieldsOrPropertiesExcept("page", "limit", "sortDirection");
 	}
 
 }

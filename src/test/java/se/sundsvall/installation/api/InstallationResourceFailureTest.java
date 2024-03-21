@@ -47,14 +47,14 @@ class InstallationResourceFailureTest {
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("page", "must be greater than or equal to 0"));
+			tuple("page", "must be greater than or equal to 1"));
 
 		verifyNoInteractions(installationServiceMock);
 	}
 
 	@Test
-	void getInstallations_SizeLessThanMinimum() {
-		final var searchParameters = createSearchParameters(sp -> sp.setSize(0));
+	void getInstallations_LimitLessThanMinimum() {
+		final var searchParameters = createSearchParameters(sp -> sp.setLimit(0));
 		final var parameterObject = createParameterMap(searchParameters);
 
 		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installations").queryParams(parameterObject).build())
@@ -69,7 +69,7 @@ class InstallationResourceFailureTest {
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("size", "must be greater than or equal to 1"));
+			tuple("limit", "must be greater than or equal to 1"));
 
 		verifyNoInteractions(installationServiceMock);
 	}

@@ -20,7 +20,7 @@ class InstallationIT extends AbstractAppTest {
 	@Test
 	void test1_getInstallations() {
 		setupCall()
-			.withServicePath("/installations?installed=false&facilityId=123&dateFrom=2022-01-01&category=ELECTRICITY&page=1&size=12&sort=ASC")
+			.withServicePath("/installations?category=ELECTRICITY&facilityId=123456789132456780&installed=true&dateFrom=2022-01-01&sortBy=propertyName&sortDirection=ASC&page=1&limit=15")
 			.withHttpMethod(GET)
 			.withExpectedResponse(EXPECTED_FILE)
 			.withExpectedResponseStatus(OK)

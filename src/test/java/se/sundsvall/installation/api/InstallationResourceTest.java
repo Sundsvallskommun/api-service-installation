@@ -52,8 +52,9 @@ class InstallationResourceTest {
 			assertThat(bean.getInstalled()).isEqualTo(searchParameters.getInstalled());
 
 			assertThat(bean.getPage()).isEqualTo(searchParameters.getPage());
-			assertThat(bean.getSize()).isEqualTo(searchParameters.getSize());
-			assertThat(bean.getSort()).isEqualTo(searchParameters.getSort());
+			assertThat(bean.getLimit()).isEqualTo(searchParameters.getLimit());
+			assertThat(bean.getSortBy()).isEqualTo(searchParameters.getSortBy());
+			assertThat(bean.getSortDirection()).isEqualTo(searchParameters.getSortDirection());
 		});
 
 		verifyNoMoreInteractions(installationServiceMock);

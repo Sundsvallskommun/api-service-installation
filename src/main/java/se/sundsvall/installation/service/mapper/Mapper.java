@@ -29,8 +29,9 @@ public final class Mapper {
 				.category(Optional.ofNullable(searchParams.getCategory()).map(Category::fromValue).orElse(null))
 				.facilityId(searchParams.getFacilityId())
 				.page(searchParams.getPage())
-				.limit(searchParams.getSize())
-				.sortBy(searchParams.getSort()))
+				.limit(searchParams.getLimit())
+				.sortBy(searchParams.getSortBy())
+				.sortDirection(generated.se.sundsvall.datawarehousereader.Direction.fromValue(searchParams.getSortDirection().name().toUpperCase())))
 			.orElse(null);
 	}
 

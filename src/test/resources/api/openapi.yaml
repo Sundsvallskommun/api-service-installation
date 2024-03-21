@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "1"
 servers:
-  - url: http://localhost:53630
+  - url: http://localhost:56631
     description: Generated server url
 paths:
   /installations:
@@ -55,34 +55,53 @@ paths:
             description: Last changed date. Format is YYYY-MM-DD.
             example: 2022-01-01
           example: 2022-01-01
-        - name: page
-          in: query
-          description: Zero-based page index (0..N)
-          required: false
-          schema:
-            minimum: 0
-            type: string
-            description: Zero-based page index (0..N)
-            example: 0
-          example: 0
-        - name: size
-          in: query
-          description: The size of the page to be returned
-          required: false
-          schema:
-            minimum: 1
-            type: string
-            description: The size of the page to be returned
-            example: 20
-          example: 20
-        - name: sort
+        - name: sortBy
           in: query
           required: false
           schema:
             type: array
             items:
               type: string
+              description: The properties to sort on
+              example: propertyName
+        - name: sortDirection
+          in: query
+          description: The sort order direction
+          required: false
+          schema:
+            type: string
+            description: The sort order direction
+            example: ASC
+          example: ASC
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            minimum: 1
+            type: string
+            description: Page number
+            example: 1
+            default: "1"
+          example: 1
+        - name: limit
+          in: query
+          description: Result size per page. Maximum allowed value is dynamically configured
+          required: false
+          schema:
+            minimum: 1
+            type: string
+            description: Result size per page. Maximum allowed value is dynamically
+              configured
+            example: 15
+          example: 15
       responses:
+        "502":
+          description: Bad Gateway
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
         "500":
           description: Internal Server error
           content:
@@ -106,12 +125,6 @@ paths:
                 oneOf:
                   - $ref: '#/components/schemas/Problem'
                   - $ref: '#/components/schemas/ConstraintViolationProblem'
-        "502":
-          description: Bad Gateway
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
   /api-docs:
     get:
       tags:
@@ -143,20 +156,20 @@ components:
           type: object
           additionalProperties:
             type: object
-        status:
-          $ref: '#/components/schemas/StatusType'
-        title:
-          type: string
         detail:
           type: string
+        title:
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusType'
     StatusType:
       type: object
       properties:
+        reasonPhrase:
+          type: string
         statusCode:
           type: integer
           format: int32
-        reasonPhrase:
-          type: string
     ConstraintViolationProblem:
       type: object
       properties:
@@ -278,12 +291,12 @@ components:
           type: object
           additionalProperties:
             type: object
-        status:
-          $ref: '#/components/schemas/StatusType'
-        title:
-          type: string
         detail:
           type: string
+        title:
+          type: string
+        status:
+          $ref: '#/components/schemas/StatusType'
         suppressed:
           type: array
           items:

@@ -3,27 +3,20 @@ package se.sundsvall.installation.api.model;
 import java.time.LocalDate;
 import java.util.List;
 
-import jakarta.validation.constraints.Min;
-
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
 import se.sundsvall.installation.api.validation.ValidCategory;
 
-import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Builder(setterPrefix = "with")
-@NoArgsConstructor
-@AllArgsConstructor
 @Schema(description = "Search parameters model")
-public class SearchParameters {
+public class SearchParameters extends AbstractParameterPagingAndSortingBase {
 
 	@Schema(description = "Category", example = "ELECTRICITY")
 	@ValidCategory
@@ -39,15 +32,48 @@ public class SearchParameters {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate dateFrom;
 
-	@Min(0)
-	@Schema(description = "Zero-based page index (0..N)", example = "0")
-	private Integer page;
+	public static SearchParameters create() {
+		return new SearchParameters();
+	}
 
-	@Min(1)
-	@Schema(description = "The size of the page to be returned", example = "20")
-	private Integer size;
+	public SearchParameters withCategory(final String category) {
+		this.category = category;
+		return this;
+	}
 
-	@ArraySchema(schema = @Schema(description = "Sort by, asc|desc", example = "asc", implementation = String.class))
-	private List<String> sort;
+	public SearchParameters withFacilityId(final String facilityId) {
+		this.facilityId = facilityId;
+		return this;
+	}
+
+	public SearchParameters withInstalled(final Boolean installed) {
+		this.installed = installed;
+		return this;
+	}
+
+	public SearchParameters withDateFrom(final LocalDate dateFrom) {
+		this.dateFrom = dateFrom;
+		return this;
+	}
+
+	public SearchParameters withPage(final Integer page) {
+		this.page = page;
+		return this;
+	}
+
+	public SearchParameters withLimit(final Integer limit) {
+		this.limit = limit;
+		return this;
+	}
+
+	public SearchParameters withSortDirection(final Sort.Direction sortDirection) {
+		this.sortDirection = sortDirection;
+		return this;
+	}
+
+	public SearchParameters withSortBy(final List<String> sortBy) {
+		this.sortBy = sortBy;
+		return this;
+	}
 
 }
