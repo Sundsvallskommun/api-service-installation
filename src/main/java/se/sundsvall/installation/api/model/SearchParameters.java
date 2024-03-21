@@ -2,25 +2,22 @@ package se.sundsvall.installation.api.model;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
+import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
 import se.sundsvall.installation.api.validation.ValidCategory;
-import se.sundsvall.installation.api.validation.ValidPagination;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
+@Getter
+@Setter
 @Schema(description = "Search parameters model")
-@ValidPagination
-public class SearchParameters extends PagingAndSortingMetaData {
+public class SearchParameters extends AbstractParameterPagingAndSortingBase {
 
 	@Schema(description = "Category", example = "ELECTRICITY")
 	@ValidCategory
@@ -38,18 +35,6 @@ public class SearchParameters extends PagingAndSortingMetaData {
 
 	public static SearchParameters create() {
 		return new SearchParameters();
-	}
-
-	@Override
-	public SearchParameters withSortBy(final List<String> sortBy) {
-		super.setSortBy(sortBy);
-		return this;
-	}
-
-	@Override
-	public SearchParameters withSortDirection(final Sort.Direction sortDirection) {
-		super.setSortDirection(sortDirection);
-		return this;
 	}
 
 	public SearchParameters withCategory(final String category) {
@@ -72,4 +57,37 @@ public class SearchParameters extends PagingAndSortingMetaData {
 		return this;
 	}
 
+	public SearchParameters withPage(final Integer page) {
+		this.page = page;
+		return this;
+	}
+
+	public SearchParameters withLimit(final Integer limit) {
+		this.limit = limit;
+		return this;
+	}
+
+	public SearchParameters withSortDirection(final Sort.Direction sortDirection) {
+		this.sortDirection = sortDirection;
+		return this;
+	}
+
+	public SearchParameters withSortBy(final List<String> sortBy) {
+		this.sortBy = sortBy;
+		return this;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
+		SearchParameters that = (SearchParameters) o;
+		return Objects.equals(category, that.category) && Objects.equals(facilityId, that.facilityId) && Objects.equals(installed, that.installed) && Objects.equals(dateFrom, that.dateFrom);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), category, facilityId, installed, dateFrom);
+	}
 }

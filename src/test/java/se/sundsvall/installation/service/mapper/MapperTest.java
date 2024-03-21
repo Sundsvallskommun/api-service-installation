@@ -41,7 +41,7 @@ class MapperTest {
 	void toInstallationParametersFromEmptyParameters() {
 		final var bean = Mapper.toInstallationParameters(SearchParameters.create());
 
-		assertThat(bean).hasAllNullFieldsOrPropertiesExcept("page", "limit");
+		assertThat(bean).hasAllNullFieldsOrPropertiesExcept("page", "limit", "sortDirection");
 	}
 
 	@Test

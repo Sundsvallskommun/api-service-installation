@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import se.sundsvall.installation.api.model.Installation;
 import se.sundsvall.installation.api.model.SearchParameters;
 
 import generated.se.sundsvall.datawarehousereader.InstallationDetails;
@@ -27,33 +26,15 @@ public final class TestUtil {
 	}
 
 	public static SearchParameters createSearchParameters() {
-		return (SearchParameters) SearchParameters.create()
+		return SearchParameters.create()
 			.withCategory("ELECTRICITY")
 			.withDateFrom(LocalDate.now())
 			.withFacilityId("facilityId")
 			.withInstalled(false)
 			.withPage(1)
-			.withLimit(10)
-			.withSortDirection(Sort.Direction.ASC)
-			.withSortBy(List.of("sortBy"));
-	}
-
-	public static Installation createInstallation() {
-		return Installation.builder()
-			.withCompany("company")
-			.withType("category")
-			.withFacilityId("facilityId")
-			.withPlacementId(123456)
-			.withCareOf("careOf")
-			.withStreet("street")
-			.withPostCode("postalCode")
-			.withCity("city")
-			.withPropertyDesignation("propertyDesignation")
-			.withDateFrom(LocalDate.now())
-			.withDateTo(LocalDate.now())
-			.withDateLastModified(LocalDate.now())
-			.withMetaData(List.of())
-			.build();
+			.withLimit(1)
+			.withSortBy(List.of("asc"))
+			.withSortDirection(Sort.Direction.ASC);
 	}
 
 	public static InstallationDetails createInstallationDetails() {
@@ -101,9 +82,9 @@ public final class TestUtil {
 		ofNullable(searchParameters.getFacilityId()).ifPresent(p -> parameters.add("facilityId", p));
 		ofNullable(searchParameters.getDateFrom()).ifPresent(p -> parameters.add("dateFrom", p.toString()));
 		ofNullable(searchParameters.getCategory()).ifPresent(p -> parameters.add("category", p));
-		Optional.of(searchParameters.getPage()).ifPresent(p -> parameters.add("page", p.toString()));
-		Optional.of(searchParameters.getLimit()).ifPresent(p -> parameters.add("limit", p.toString()));
-		ofNullable(searchParameters.getSortDirection()).ifPresent(p -> parameters.add("sortDirection", String.valueOf(p)));
+		Optional.of(searchParameters.getPage()).ifPresent(p -> parameters.add("page", valueOf(p)));
+		Optional.of(searchParameters.getLimit()).ifPresent(p -> parameters.add("limit", valueOf(p)));
+		Optional.ofNullable(searchParameters.getSortDirection()).ifPresent(p -> parameters.add("sortDirection", p.name()));
 		ofNullable(searchParameters.getSortBy()).ifPresent(p -> p.forEach(sortBy -> parameters.add("sortBy", sortBy)));
 		return parameters;
 	}

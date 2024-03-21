@@ -50,8 +50,9 @@ class InstallationResourceTest {
 			assertThat(bean.getDateFrom()).isEqualTo(searchParameters.getDateFrom());
 			assertThat(bean.getFacilityId()).isEqualTo(searchParameters.getFacilityId());
 			assertThat(bean.getInstalled()).isEqualTo(searchParameters.getInstalled());
-			assertThat(bean.getLimit()).isEqualTo(searchParameters.getLimit());
+
 			assertThat(bean.getPage()).isEqualTo(searchParameters.getPage());
+			assertThat(bean.getLimit()).isEqualTo(searchParameters.getLimit());
 			assertThat(bean.getSortBy()).isEqualTo(searchParameters.getSortBy());
 			assertThat(bean.getSortDirection()).isEqualTo(searchParameters.getSortDirection());
 		});

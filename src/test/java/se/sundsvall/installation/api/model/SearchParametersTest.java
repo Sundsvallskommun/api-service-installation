@@ -3,7 +3,6 @@ package se.sundsvall.installation.api.model;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
-import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToString;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,7 +15,7 @@ import com.google.code.beanmatchers.BeanMatchers;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort;
 
 class SearchParametersTest {
 
@@ -29,9 +28,8 @@ class SearchParametersTest {
 	void testBean() {
 		assertThat(SearchParameters.class, allOf(
 			hasValidBeanConstructor(),
-			hasValidBeanHashCode(),
 			hasValidBeanEquals(),
-			hasValidBeanToString(),
+			hasValidBeanHashCode(),
 			hasValidGettersAndSetters()));
 	}
 
@@ -41,39 +39,36 @@ class SearchParametersTest {
 		final var category = "ELECTRICITY";
 		final var facilityId = "facilityId";
 		final var dateFrom = LocalDate.MIN;
-		final var page = 5;
-		final var limit = 10;
-		final var sortBy = List.of("sortBy");
-		final var sortDirection = Direction.ASC;
 
-		final SearchParameters searchParameters = (SearchParameters) SearchParameters.create()
+
+		final SearchParameters searchParameters = SearchParameters.create()
 			.withInstalled(installed)
 			.withCategory(category)
 			.withFacilityId(facilityId)
 			.withDateFrom(dateFrom)
-			.withPage(page)
-			.withLimit(limit)
-			.withSortBy(sortBy)
-			.withSortDirection(sortDirection);
+			.withPage(1)
+			.withLimit(1)
+			.withSortBy(List.of("asc"))
+			.withSortDirection(Sort.Direction.ASC);
 
 		Assertions.assertThat(searchParameters).isNotNull().hasNoNullFieldsOrProperties();
 		Assertions.assertThat(searchParameters.getInstalled()).isEqualTo(installed);
 		Assertions.assertThat(searchParameters.getCategory()).isEqualTo(category);
 		Assertions.assertThat(searchParameters.getFacilityId()).isEqualTo(facilityId);
 		Assertions.assertThat(searchParameters.getDateFrom()).isEqualTo(dateFrom);
-		Assertions.assertThat(searchParameters.getPage()).isEqualTo(page);
-		Assertions.assertThat(searchParameters.getLimit()).isEqualTo(limit);
-		Assertions.assertThat(searchParameters.getSortBy()).isEqualTo(sortBy);
-		Assertions.assertThat(searchParameters.getSortDirection()).isEqualTo(sortDirection);
+		Assertions.assertThat(searchParameters.getPage()).isEqualTo(1);
+		Assertions.assertThat(searchParameters.getLimit()).isEqualTo(1);
+		Assertions.assertThat(searchParameters.getSortBy()).isEqualTo(List.of("asc"));
+		Assertions.assertThat(searchParameters.getSortDirection()).isEqualTo(Sort.Direction.ASC);
 	}
 
 	@Test
 	void testNoDirtOnCreatedBean() {
 		Assertions.assertThat(SearchParameters.create())
-			.hasAllNullFieldsOrPropertiesExcept("page", "limit", "count", "totalRecords", "totalPages");
+			.hasAllNullFieldsOrPropertiesExcept("page", "limit", "sortDirection");
 
 		Assertions.assertThat(new SearchParameters())
-			.hasAllNullFieldsOrPropertiesExcept("page", "limit", "count", "totalRecords", "totalPages");
+			.hasAllNullFieldsOrPropertiesExcept("page", "limit", "sortDirection");
 	}
 
 }

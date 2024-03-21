@@ -30,7 +30,8 @@ public final class Mapper {
 				.facilityId(searchParams.getFacilityId())
 				.page(searchParams.getPage())
 				.limit(searchParams.getLimit())
-				.sortBy(searchParams.getSortBy()))
+				.sortBy(searchParams.getSortBy())
+				.sortDirection(generated.se.sundsvall.datawarehousereader.Direction.fromValue(searchParams.getSortDirection().name().toUpperCase())))
 			.orElse(null);
 	}
 

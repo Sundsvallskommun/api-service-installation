@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "1"
 servers:
-  - url: http://localhost:63500
+  - url: http://localhost:56631
     description: Generated server url
 paths:
   /installations:
@@ -62,9 +62,8 @@ paths:
             type: array
             items:
               type: string
-              description: The properties to sort by
-              readOnly: true
-              example: property
+              description: The properties to sort on
+              example: propertyName
         - name: sortDirection
           in: query
           description: The sort order direction
@@ -76,55 +75,39 @@ paths:
           example: ASC
         - name: page
           in: query
-          description: Current page
+          description: Page number
           required: false
           schema:
+            minimum: 1
             type: string
-            description: Current page
-            readOnly: true
-            example: 5
-          example: 5
+            description: Page number
+            example: 1
+            default: "1"
+          example: 1
         - name: limit
           in: query
-          description: Displayed objects per page
+          description: Result size per page. Maximum allowed value is dynamically configured
           required: false
           schema:
+            minimum: 1
             type: string
-            description: Displayed objects per page
-            readOnly: true
-            example: 20
-          example: 20
-        - name: count
-          in: query
-          description: Displayed objects on current page
-          required: false
-          schema:
-            type: string
-            description: Displayed objects on current page
-            readOnly: true
-            example: 13
-          example: 13
-        - name: totalRecords
-          in: query
-          description: Total amount of hits based on provided search parameters
-          required: false
-          schema:
-            type: string
-            description: Total amount of hits based on provided search parameters
-            readOnly: true
-            example: 98
-          example: 98
-        - name: totalPages
-          in: query
-          description: Total amount of pages based on provided search parameters
-          required: false
-          schema:
-            type: string
-            description: Total amount of pages based on provided search parameters
-            readOnly: true
-            example: 23
-          example: 23
+            description: Result size per page. Maximum allowed value is dynamically
+              configured
+            example: 15
+          example: 15
       responses:
+        "502":
+          description: Bad Gateway
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        "500":
+          description: Internal Server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
         "200":
           description: Successful operation
           content:
@@ -134,12 +117,6 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/InstallationsResponse'
-        "500":
-          description: Internal Server error
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
         "400":
           description: Bad request
           content:
@@ -148,12 +125,6 @@ paths:
                 oneOf:
                   - $ref: '#/components/schemas/Problem'
                   - $ref: '#/components/schemas/ConstraintViolationProblem'
-        "502":
-          description: Bad Gateway
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
   /api-docs:
     get:
       tags:
@@ -175,10 +146,6 @@ components:
     Problem:
       type: object
       properties:
-        title:
-          type: string
-        detail:
-          type: string
         instance:
           type: string
           format: uri
@@ -189,16 +156,20 @@ components:
           type: object
           additionalProperties:
             type: object
+        detail:
+          type: string
+        title:
+          type: string
         status:
           $ref: '#/components/schemas/StatusType'
     StatusType:
       type: object
       properties:
+        reasonPhrase:
+          type: string
         statusCode:
           type: integer
           format: int32
-        reasonPhrase:
-          type: string
     ConstraintViolationProblem:
       type: object
       properties:
@@ -239,8 +210,6 @@ components:
           type: string
         message:
           type: string
-        detail:
-          type: string
         instance:
           type: string
           format: uri
@@ -248,6 +217,8 @@ components:
           type: object
           additionalProperties:
             type: object
+        detail:
+          type: string
         suppressed:
           type: array
           items:
@@ -310,10 +281,6 @@ components:
                 type: boolean
         message:
           type: string
-        title:
-          type: string
-        detail:
-          type: string
         instance:
           type: string
           format: uri
@@ -324,6 +291,10 @@ components:
           type: object
           additionalProperties:
             type: object
+        detail:
+          type: string
+        title:
+          type: string
         status:
           $ref: '#/components/schemas/StatusType'
         suppressed:
