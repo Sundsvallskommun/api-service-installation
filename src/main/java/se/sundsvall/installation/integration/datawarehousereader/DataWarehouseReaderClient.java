@@ -19,7 +19,7 @@ import generated.se.sundsvall.datawarehousereader.InstallationParameters;
 )
 public interface DataWarehouseReaderClient {
 
-	@GetMapping
+	@GetMapping("/installations")
 	InstallationDetailsResponse getInstallationDetails(@SpringQueryMap final InstallationParameters installationParameters);
 
 }
