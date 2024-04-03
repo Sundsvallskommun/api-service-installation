@@ -89,7 +89,6 @@ public final class Mapper {
 				.withCompany(data.getCompany())
 				.build())
 			.orElse(null);
-
 	}
 
 	public static List<MetaData> toMetaDataList(final List<InstallationMetaDataEmbeddable> metaData) {

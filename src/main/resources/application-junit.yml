@@ -2,6 +2,8 @@ config:
   integration:
     datawarehousereader:
       base-url: http://datawarehousereader.url
+      connect-timeout: 20
+      read-timeout: 115
   spring:
     security:
       oauth2:
