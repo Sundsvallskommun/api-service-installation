@@ -1,12 +1,12 @@
 config:
   integration:
     datawarehousereader:
-      base-url: http://localhost:${wiremock.server.port}/api-datawarehousereader
+      url: http://localhost:${wiremock.server.port}/api-datawarehousereader
       token-url: http://localhost:${wiremock.server.port}/token
       client-id: someClientId
       client-secret: someClientSecret
-      connect-timeout: 20
-      read-timeout: 115
+      connectTimeout: 20
+      readTimeout: 115
 logging:
   level:
     root: INFO
