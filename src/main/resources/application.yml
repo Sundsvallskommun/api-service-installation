@@ -1,6 +1,6 @@
 spring:
   application:
-    name: api-service-installation
+    name: api-installation
   security:
     oauth2:
       client:
