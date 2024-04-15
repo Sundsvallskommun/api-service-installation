@@ -39,7 +39,7 @@ class InstallationResource {
 	}
 
 	@Operation(summary = "Get uninstalled installations",
-		description = "Resource returns all uninstalled installations matching provided search parameters")
+		description = "Resource returns all installations matching provided search parameters")
 	@ApiResponses(value = {
 		@ApiResponse(responseCode = "200", description = "Successful operation", useReturnTypeSchema = true),
 		@ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(oneOf = {Problem.class, ConstraintViolationProblem.class}))),

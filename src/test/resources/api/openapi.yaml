@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "1"
 servers:
-  - url: http://localhost:61572
+  - url: http://localhost:61020
     description: Generated server url
 paths:
   /installations:
@@ -15,8 +15,7 @@ paths:
       tags:
         - Installation
       summary: Get uninstalled installations
-      description: Resource returns all uninstalled installations matching provided
-        search parameters
+      description: Resource returns all installations matching provided search parameters
       operationId: getInstallations
       parameters:
         - name: category
@@ -96,12 +95,6 @@ paths:
             example: 15
           example: 15
       responses:
-        "502":
-          description: Bad Gateway
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
         "200":
           description: Successful operation
           content:
@@ -121,6 +114,12 @@ paths:
                   - $ref: '#/components/schemas/ConstraintViolationProblem'
         "500":
           description: Internal Server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        "502":
+          description: Bad Gateway
           content:
             application/problem+json:
               schema:
@@ -158,9 +157,9 @@ components:
             type: object
         status:
           $ref: '#/components/schemas/StatusType'
-        title:
-          type: string
         detail:
+          type: string
+        title:
           type: string
     StatusType:
       type: object
@@ -293,9 +292,9 @@ components:
             type: object
         status:
           $ref: '#/components/schemas/StatusType'
-        title:
-          type: string
         detail:
+          type: string
+        title:
           type: string
         suppressed:
           type: array
