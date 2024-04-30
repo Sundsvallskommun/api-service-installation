@@ -1,5 +1,6 @@
 package se.sundsvall.installation.service.mapper;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,7 +51,7 @@ public final class Mapper {
 				.withCount(meta.getCount())
 				.withTotalRecords(meta.getTotalRecords())
 				.withTotalPages(meta.getTotalPages())
-				.withSortBy(meta.getSortBy())
+				.withSortBy(Optional.of(meta.getSortBy()).orElse(Collections.emptyList()))
 				.withSortDirection(Direction.fromOptionalString(String.valueOf(meta.getSortDirection())).orElse(Direction.ASC)))
 			.orElse(null);
 	}
