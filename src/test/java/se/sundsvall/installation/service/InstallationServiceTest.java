@@ -1,6 +1,7 @@
 package se.sundsvall.installation.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static se.sundsvall.installation.TestUtil.createSearchParameters;
@@ -13,9 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import se.sundsvall.installation.integration.datawarehousereader.DataWarehouseReaderClient;
-
 import generated.se.sundsvall.datawarehousereader.InstallationParameters;
+import se.sundsvall.installation.integration.datawarehousereader.DataWarehouseReaderClient;
 
 @ExtendWith(MockitoExtension.class)
 class InstallationServiceTest {
@@ -31,11 +31,13 @@ class InstallationServiceTest {
 
 	@Test
 	void getInstallations() {
+
+		final var municipalityId = "municipalityId";
 		final var searchParameters = createSearchParameters();
 
-		installationService.getInstallations(searchParameters);
+		installationService.getInstallations(municipalityId, searchParameters);
 
-		verify(dataWarehouseReaderClient).getInstallationDetails(installationParametersCaptor.capture());
+		verify(dataWarehouseReaderClient).getInstallationDetails(eq(municipalityId), installationParametersCaptor.capture());
 
 		assertThat(installationParametersCaptor.getValue()).satisfies(bean -> {
 			assertThat(bean.getCategory()).hasToString(searchParameters.getCategory());
@@ -50,5 +52,4 @@ class InstallationServiceTest {
 
 		verifyNoMoreInteractions(dataWarehouseReaderClient);
 	}
-
 }

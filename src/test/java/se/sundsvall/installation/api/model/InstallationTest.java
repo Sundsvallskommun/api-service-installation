@@ -3,6 +3,7 @@ package se.sundsvall.installation.api.model;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToString;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -10,10 +11,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
-import com.google.code.beanmatchers.BeanMatchers;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import com.google.code.beanmatchers.BeanMatchers;
 
 class InstallationTest {
 
@@ -52,28 +53,28 @@ class InstallationTest {
 			.withMetaData(List.of(metaData))
 			.build();
 
-		Assertions.assertThat(installation).isNotNull().hasNoNullFieldsOrProperties();
-		Assertions.assertThat(installation.getCompany()).isEqualTo("company");
-		Assertions.assertThat(installation.getType()).isEqualTo("type");
-		Assertions.assertThat(installation.getFacilityId()).isEqualTo("facilityId");
-		Assertions.assertThat(installation.getPlacementId()).isEqualTo(12345);
-		Assertions.assertThat(installation.getCareOf()).isEqualTo("careOf");
-		Assertions.assertThat(installation.getStreet()).isEqualTo("street");
-		Assertions.assertThat(installation.getPostCode()).isEqualTo("postCode");
-		Assertions.assertThat(installation.getCity()).isEqualTo("city");
-		Assertions.assertThat(installation.getPropertyDesignation()).isEqualTo("propertyDesignation");
-		Assertions.assertThat(installation.getDateFrom()).isEqualTo(now);
-		Assertions.assertThat(installation.getDateTo()).isEqualTo(now);
-		Assertions.assertThat(installation.getDateLastModified()).isEqualTo(now);
-		Assertions.assertThat(installation.getMetaData()).isEqualTo(List.of(metaData));
+		assertThat(installation).isNotNull().hasNoNullFieldsOrProperties();
+		assertThat(installation.getCompany()).isEqualTo("company");
+		assertThat(installation.getType()).isEqualTo("type");
+		assertThat(installation.getFacilityId()).isEqualTo("facilityId");
+		assertThat(installation.getPlacementId()).isEqualTo(12345);
+		assertThat(installation.getCareOf()).isEqualTo("careOf");
+		assertThat(installation.getStreet()).isEqualTo("street");
+		assertThat(installation.getPostCode()).isEqualTo("postCode");
+		assertThat(installation.getCity()).isEqualTo("city");
+		assertThat(installation.getPropertyDesignation()).isEqualTo("propertyDesignation");
+		assertThat(installation.getDateFrom()).isEqualTo(now);
+		assertThat(installation.getDateTo()).isEqualTo(now);
+		assertThat(installation.getDateLastModified()).isEqualTo(now);
+		assertThat(installation.getMetaData()).isEqualTo(List.of(metaData));
 	}
 
 	@Test
 	void testNoDirtOnCreatedBean() {
-		Assertions.assertThat(Installation.builder().build())
+		assertThat(Installation.builder().build())
 			.hasAllNullFieldsOrProperties();
 
-		Assertions.assertThat(new Installation())
+		assertThat(new Installation())
 			.hasAllNullFieldsOrProperties();
 	}
 }

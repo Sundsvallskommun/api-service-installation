@@ -1,133 +1,140 @@
 openapi: 3.0.1
 info:
   title: api-installation
-  contact: { }
+  contact: {}
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
-  version: "1"
+  version: "2.0"
 servers:
-  - url: http://localhost:61020
-    description: Generated server url
+- url: http://localhost:8080
+  description: Generated server url
 paths:
-  /installations:
+  /{municipalityId}/installations:
     get:
       tags:
-        - Installation
+      - Installation
       summary: Get uninstalled installations
       description: Resource returns all installations matching provided search parameters
       operationId: getInstallations
       parameters:
-        - name: category
-          in: query
+      - name: municipalityId
+        in: path
+        description: Municipality id
+        required: true
+        schema:
+          type: string
+        example: 2281
+      - name: category
+        in: query
+        description: Category
+        required: false
+        schema:
+          type: string
           description: Category
-          required: false
-          schema:
-            type: string
-            description: Category
-            example: ELECTRICITY
           example: ELECTRICITY
-        - name: facilityId
-          in: query
+        example: ELECTRICITY
+      - name: facilityId
+        in: query
+        description: Facility id
+        required: false
+        schema:
+          type: string
           description: Facility id
-          required: false
-          schema:
-            type: string
-            description: Facility id
-            example: 123456789132456789
           example: 123456789132456789
-        - name: installed
-          in: query
+        example: 123456789132456789
+      - name: installed
+        in: query
+        description: Is the installation installed
+        required: false
+        schema:
+          type: string
           description: Is the installation installed
-          required: false
-          schema:
-            type: string
-            description: Is the installation installed
-            example: true
           example: true
-        - name: dateFrom
-          in: query
+        example: true
+      - name: dateFrom
+        in: query
+        description: Last changed date. Format is YYYY-MM-DD.
+        required: false
+        schema:
+          type: string
           description: Last changed date. Format is YYYY-MM-DD.
-          required: false
-          schema:
-            type: string
-            description: Last changed date. Format is YYYY-MM-DD.
-            example: 2022-01-01
           example: 2022-01-01
-        - name: sortBy
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-              description: The properties to sort on
-              example: propertyName
-        - name: sortDirection
-          in: query
+        example: 2022-01-01
+      - name: sortBy
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            description: The properties to sort on
+            example: propertyName
+      - name: sortDirection
+        in: query
+        description: The sort order direction
+        required: false
+        schema:
+          type: string
           description: The sort order direction
-          required: false
-          schema:
-            type: string
-            description: The sort order direction
-            example: ASC
           example: ASC
-        - name: page
-          in: query
+        example: ASC
+      - name: page
+        in: query
+        description: Page number
+        required: false
+        schema:
+          minimum: 1
+          type: string
           description: Page number
-          required: false
-          schema:
-            minimum: 1
-            type: string
-            description: Page number
-            example: 1
-            default: "1"
           example: 1
-        - name: limit
-          in: query
-          description: Result size per page. Maximum allowed value is dynamically configured
-          required: false
-          schema:
-            minimum: 1
-            type: string
-            description: Result size per page. Maximum allowed value is dynamically
-              configured
-            example: 15
+          default: "1"
+        example: 1
+      - name: limit
+        in: query
+        description: Result size per page. Maximum allowed value is dynamically configured
+        required: false
+        schema:
+          minimum: 1
+          type: string
+          description: Result size per page. Maximum allowed value is dynamically
+            configured
           example: 15
+        example: 15
       responses:
+        "500":
+          description: Internal Server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
         "200":
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InstallationsResponse'
+                $ref: "#/components/schemas/InstallationsResponse"
             application/problem+json:
               schema:
-                $ref: '#/components/schemas/InstallationsResponse'
+                $ref: "#/components/schemas/InstallationsResponse"
         "400":
           description: Bad request
           content:
             application/problem+json:
               schema:
                 oneOf:
-                  - $ref: '#/components/schemas/Problem'
-                  - $ref: '#/components/schemas/ConstraintViolationProblem'
-        "500":
-          description: Internal Server error
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
+                - $ref: "#/components/schemas/Problem"
+                - $ref: "#/components/schemas/ConstraintViolationProblem"
         "502":
           description: Bad Gateway
           content:
             application/problem+json:
               schema:
-                $ref: '#/components/schemas/Problem'
+                $ref: "#/components/schemas/Problem"
   /api-docs:
     get:
       tags:
-        - API
+      - API
       summary: OpenAPI
       operationId: getApiDocs
       responses:
@@ -156,10 +163,10 @@ components:
           additionalProperties:
             type: object
         status:
-          $ref: '#/components/schemas/StatusType'
-        detail:
-          type: string
+          $ref: "#/components/schemas/StatusType"
         title:
+          type: string
+        detail:
           type: string
     StatusType:
       type: object
@@ -173,7 +180,7 @@ components:
       type: object
       properties:
         cause:
-          $ref: '#/components/schemas/ThrowableProblem'
+          $ref: "#/components/schemas/ThrowableProblem"
         stackTrace:
           type: array
           items:
@@ -200,11 +207,11 @@ components:
           type: string
           format: uri
         status:
-          $ref: '#/components/schemas/StatusType'
+          $ref: "#/components/schemas/StatusType"
         violations:
           type: array
           items:
-            $ref: '#/components/schemas/Violation'
+            $ref: "#/components/schemas/Violation"
         title:
           type: string
         message:
@@ -255,7 +262,7 @@ components:
       type: object
       properties:
         cause:
-          $ref: '#/components/schemas/ThrowableProblem'
+          $ref: "#/components/schemas/ThrowableProblem"
         stackTrace:
           type: array
           items:
@@ -291,10 +298,10 @@ components:
           additionalProperties:
             type: object
         status:
-          $ref: '#/components/schemas/StatusType'
-        detail:
-          type: string
+          $ref: "#/components/schemas/StatusType"
         title:
+          type: string
+        detail:
           type: string
         suppressed:
           type: array
@@ -341,8 +348,8 @@ components:
       description: The sort order direction
       example: ASC
       enum:
-        - ASC
-        - DESC
+      - ASC
+      - DESC
     Installation:
       type: object
       properties:
@@ -403,7 +410,7 @@ components:
           description: Meta data
           readOnly: true
           items:
-            $ref: '#/components/schemas/MetaData'
+            $ref: "#/components/schemas/MetaData"
       readOnly: true
     InstallationsResponse:
       type: object
@@ -412,9 +419,9 @@ components:
           type: array
           readOnly: true
           items:
-            $ref: '#/components/schemas/Installation'
+            $ref: "#/components/schemas/Installation"
         _meta:
-          $ref: '#/components/schemas/PagingAndSortingMetaData'
+          $ref: "#/components/schemas/PagingAndSortingMetaData"
     MetaData:
       type: object
       properties:
@@ -482,7 +489,7 @@ components:
             readOnly: true
             example: property
         sortDirection:
-          $ref: '#/components/schemas/Direction'
+          $ref: "#/components/schemas/Direction"
       description: PagingAndSortingMetaData model
       readOnly: true
-  securitySchemes: { }
+  securitySchemes: {}

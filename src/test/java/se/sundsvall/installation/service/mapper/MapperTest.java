@@ -51,7 +51,8 @@ class MapperTest {
 		final var installationsResponse = Mapper.toInstallationsResponse(installationDetailsResponse);
 
 		assertThat(installationsResponse.getInstallationDetails()).hasSize(1);
-		assertThat(installationsResponse.getMeta()).isEqualTo(installationDetailsResponse.getMeta());
+		assertThat(installationsResponse.getMeta()).isNull();
+		assertThat(installationDetailsResponse.getMeta()).isNull();
 	}
 
 	@Test

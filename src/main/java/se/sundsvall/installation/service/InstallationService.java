@@ -18,8 +18,7 @@ public class InstallationService {
 		this.dataWarehouseReaderClient = dataWarehouseReaderClient;
 	}
 
-	public InstallationsResponse getInstallations(final SearchParameters searchParameters) {
-		final var dwrResponse = dataWarehouseReaderClient.getInstallationDetails(toInstallationParameters(searchParameters));
-		return toInstallationsResponse(dwrResponse);
+	public InstallationsResponse getInstallations(final String municipalityId, final SearchParameters searchParameters) {
+		return toInstallationsResponse(dataWarehouseReaderClient.getInstallationDetails(municipalityId, toInstallationParameters(searchParameters)));
 	}
 }
