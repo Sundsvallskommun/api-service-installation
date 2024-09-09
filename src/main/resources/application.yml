@@ -30,3 +30,6 @@ resilience4j:
     instances:
       datawarehousereader:
         ignoreExceptions: se.sundsvall.dept44.exception.ClientProblem
+mdc:
+  municipalityId:
+    enabled: true

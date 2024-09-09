@@ -1,7 +1,6 @@
 package se.sundsvall.installation;
 
 import static java.lang.String.valueOf;
-import static java.util.Optional.ofNullable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,12 +11,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import se.sundsvall.installation.api.model.SearchParameters;
-
 import generated.se.sundsvall.datawarehousereader.InstallationDetails;
 import generated.se.sundsvall.datawarehousereader.InstallationDetailsResponse;
 import generated.se.sundsvall.datawarehousereader.InstallationMetaDataEmbeddable;
 import generated.se.sundsvall.datawarehousereader.PagingAndSortingMetaData;
+import se.sundsvall.installation.api.model.SearchParameters;
 
 public final class TestUtil {
 
@@ -76,16 +74,16 @@ public final class TestUtil {
 	}
 
 	public static MultiValueMap<String, String> createParameterMap(final SearchParameters searchParameters) {
-		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+		final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 
-		ofNullable(searchParameters.getInstalled()).ifPresent(p -> parameters.add("installed", valueOf(p)));
-		ofNullable(searchParameters.getFacilityId()).ifPresent(p -> parameters.add("facilityId", p));
-		ofNullable(searchParameters.getDateFrom()).ifPresent(p -> parameters.add("dateFrom", p.toString()));
-		ofNullable(searchParameters.getCategory()).ifPresent(p -> parameters.add("category", p));
+		Optional.ofNullable(searchParameters.getInstalled()).ifPresent(p -> parameters.add("installed", valueOf(p)));
+		Optional.ofNullable(searchParameters.getFacilityId()).ifPresent(p -> parameters.add("facilityId", p));
+		Optional.ofNullable(searchParameters.getDateFrom()).ifPresent(p -> parameters.add("dateFrom", p.toString()));
+		Optional.ofNullable(searchParameters.getCategory()).ifPresent(p -> parameters.add("category", p));
 		Optional.of(searchParameters.getPage()).ifPresent(p -> parameters.add("page", valueOf(p)));
 		Optional.of(searchParameters.getLimit()).ifPresent(p -> parameters.add("limit", valueOf(p)));
 		Optional.ofNullable(searchParameters.getSortDirection()).ifPresent(p -> parameters.add("sortDirection", p.name()));
-		ofNullable(searchParameters.getSortBy()).ifPresent(p -> p.forEach(sortBy -> parameters.add("sortBy", sortBy)));
+		Optional.ofNullable(searchParameters.getSortBy()).ifPresent(p -> p.forEach(sortBy -> parameters.add("sortBy", sortBy)));
 		return parameters;
 	}
 
@@ -99,5 +97,4 @@ public final class TestUtil {
 			.sortBy(List.of("sortBy"))
 			.sortDirection(generated.se.sundsvall.datawarehousereader.Direction.ASC);
 	}
-
 }

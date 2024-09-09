@@ -1,6 +1,7 @@
 package se.sundsvall.installation.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -24,6 +25,8 @@ import se.sundsvall.installation.service.InstallationService;
 @ActiveProfiles("junit")
 class InstallationResourceTest {
 
+	private static final String PATH = "/{municipalityId}/installations";
+
 	@MockBean
 	private InstallationService installationServiceMock;
 
@@ -35,15 +38,17 @@ class InstallationResourceTest {
 
 	@Test
 	void getInstallations() {
+
+		final var municipalityId = "2281";
 		final var searchParameters = createSearchParameters();
 		final var parameterObject = createParameterMap(searchParameters);
 
-		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installations")
-				.queryParams(parameterObject).build())
+		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParams(parameterObject).build(municipalityId))
 			.exchange()
 			.expectStatus().isOk();
 
-		verify(installationServiceMock).getInstallations(searchParametersCaptor.capture());
+		verify(installationServiceMock).getInstallations(eq(municipalityId), searchParametersCaptor.capture());
 
 		assertThat(searchParametersCaptor.getValue()).satisfies(bean -> {
 			assertThat(bean.getCategory()).isEqualTo(searchParameters.getCategory());
@@ -59,5 +64,4 @@ class InstallationResourceTest {
 
 		verifyNoMoreInteractions(installationServiceMock);
 	}
-
 }

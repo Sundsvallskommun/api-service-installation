@@ -16,6 +16,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.zalando.problem.violations.ConstraintViolationProblem;
+import org.zalando.problem.violations.Violation;
 
 import se.sundsvall.installation.Application;
 import se.sundsvall.installation.service.InstallationService;
@@ -24,6 +25,8 @@ import se.sundsvall.installation.service.InstallationService;
 @ActiveProfiles("junit")
 class InstallationResourceFailureTest {
 
+	private static final String PATH = "/{municipalityId}/installations";
+
 	@MockBean
 	private InstallationService installationServiceMock;
 
@@ -31,11 +34,13 @@ class InstallationResourceFailureTest {
 	private WebTestClient webTestClient;
 
 	@Test
-	void getInstallations_PageLessThanMinimum() {
+	void getInstallationsPageLessThanMinimum() {
+
+		final var municipalityId = "2281";
 		final var searchParameters = createSearchParameters(sp -> sp.setPage(-1));
 		final var parameterObject = createParameterMap(searchParameters);
 
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installations").queryParams(parameterObject).build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH).queryParams(parameterObject).build(municipalityId))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -46,18 +51,20 @@ class InstallationResourceFailureTest {
 		assertThat(response).isNotNull();
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
-		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("page", "must be greater than or equal to 1"));
+		assertThat(response.getViolations()).extracting(Violation::getField, Violation::getMessage)
+			.containsExactlyInAnyOrder(tuple("page", "must be greater than or equal to 1"));
 
 		verifyNoInteractions(installationServiceMock);
 	}
 
 	@Test
-	void getInstallations_LimitLessThanMinimum() {
+	void getInstallationsLimitLessThanMinimum() {
+
+		final var municipalityId = "2281";
 		final var searchParameters = createSearchParameters(sp -> sp.setLimit(0));
 		final var parameterObject = createParameterMap(searchParameters);
 
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installations").queryParams(parameterObject).build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH).queryParams(parameterObject).build(municipalityId))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -68,18 +75,20 @@ class InstallationResourceFailureTest {
 		assertThat(response).isNotNull();
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
-		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("limit", "must be greater than or equal to 1"));
+		assertThat(response.getViolations()).extracting(Violation::getField, Violation::getMessage)
+			.containsExactlyInAnyOrder(tuple("limit", "must be greater than or equal to 1"));
 
 		verifyNoInteractions(installationServiceMock);
 	}
 
 	@Test
-	void getInstallations_InvalidCategory() {
+	void getInstallationsInvalidCategory() {
+
+		final var municipalityId = "2281";
 		final var searchParameters = createSearchParameters(sp -> sp.setCategory("invalid"));
 		final var parameterObject = createParameterMap(searchParameters);
 
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installations").queryParams(parameterObject).build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH).queryParams(parameterObject).build(municipalityId))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -90,12 +99,34 @@ class InstallationResourceFailureTest {
 		assertThat(response).isNotNull();
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
-		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("category", "category is not valid"));
+		assertThat(response.getViolations()).extracting(Violation::getField, Violation::getMessage)
+			.containsExactlyInAnyOrder(tuple("category", "category is not valid"));
 
 		verifyNoInteractions(installationServiceMock);
 
 	}
 
+	@Test
+	void getInstallationsInvalidMunicipalityId() {
 
+		final var municipalityId = "invalid";
+		final var searchParameters = createSearchParameters();
+		final var parameterObject = createParameterMap(searchParameters);
+
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH).queryParams(parameterObject).build(municipalityId))
+			.exchange()
+			.expectStatus().isBadRequest()
+			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
+			.expectBody(ConstraintViolationProblem.class)
+			.returnResult()
+			.getResponseBody();
+
+		assertThat(response).isNotNull();
+		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
+		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
+		assertThat(response.getViolations()).extracting(Violation::getField, Violation::getMessage)
+			.containsExactlyInAnyOrder(tuple("getInstallations.municipalityId", "not a valid municipality ID"));
+
+		verifyNoInteractions(installationServiceMock);
+	}
 }
