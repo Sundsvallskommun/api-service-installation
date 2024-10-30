@@ -12,7 +12,9 @@ import jakarta.validation.Payload;
 import se.sundsvall.installation.api.validation.impl.ValidCategoryConstraintValidator;
 
 @Documented
-@Target({ ElementType.FIELD, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE })
+@Target({
+	ElementType.FIELD, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE
+})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = ValidCategoryConstraintValidator.class)
 public @interface ValidCategory {

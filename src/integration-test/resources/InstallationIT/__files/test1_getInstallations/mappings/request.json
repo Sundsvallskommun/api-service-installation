@@ -4,10 +4,8 @@
 		"url": "/api-datawarehousereader/2281/installations?installed=true&sortDirection=ASC&facilityId=123456789132456780&limit=15&sortBy=propertyName&page=1&category=ELECTRICITY&dateFrom=2022-01-01"
 	},
 	"response": {
-		"headers": {
-			"Content-Type": "application/json"
-		},
-		"status": 200,
-		"bodyFileName": "test1_getInstallations/responses/dwr-response.json"
+		"headers": {"Content-Type": "application/json"},
+		"bodyFileName": "test1_getInstallations/responses/dwr-response.json",
+		"status": 200
 	}
 }

@@ -5,5 +5,5 @@ import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @ConfigurationProperties("integration.datawarehousereader")
 public record DataWarehouseReaderProperties(@DefaultValue("5") int connectTimeout,
-                                            @DefaultValue("115") int readTimeout) {
+	@DefaultValue("115") int readTimeout) {
 }
