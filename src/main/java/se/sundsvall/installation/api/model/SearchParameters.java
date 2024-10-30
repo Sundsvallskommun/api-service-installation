@@ -79,9 +79,12 @@ public class SearchParameters extends AbstractParameterPagingAndSortingBase {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		if (!super.equals(o)) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		if (!super.equals(o))
+			return false;
 		SearchParameters that = (SearchParameters) o;
 		return Objects.equals(category, that.category) && Objects.equals(facilityId, that.facilityId) && Objects.equals(installed, that.installed) && Objects.equals(dateFrom, that.dateFrom);
 	}
