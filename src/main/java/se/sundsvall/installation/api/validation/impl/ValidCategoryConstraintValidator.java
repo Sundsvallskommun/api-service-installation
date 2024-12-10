@@ -1,10 +1,8 @@
 package se.sundsvall.installation.api.validation.impl;
 
-import java.util.List;
-
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-
+import java.util.List;
 import se.sundsvall.installation.api.validation.ValidCategory;
 
 public class ValidCategoryConstraintValidator implements ConstraintValidator<ValidCategory, String> {

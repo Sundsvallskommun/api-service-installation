@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static se.sundsvall.installation.TestUtil.createSearchParameters;
 
+import generated.se.sundsvall.datawarehousereader.InstallationParameters;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -13,8 +14,6 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import generated.se.sundsvall.datawarehousereader.InstallationParameters;
 import se.sundsvall.installation.integration.datawarehousereader.DataWarehouseReaderClient;
 
 @ExtendWith(MockitoExtension.class)

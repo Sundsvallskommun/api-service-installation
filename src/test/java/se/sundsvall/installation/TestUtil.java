@@ -2,19 +2,17 @@ package se.sundsvall.installation;
 
 import static java.lang.String.valueOf;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
-
-import org.springframework.data.domain.Sort;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-
 import generated.se.sundsvall.datawarehousereader.InstallationDetails;
 import generated.se.sundsvall.datawarehousereader.InstallationDetailsResponse;
 import generated.se.sundsvall.datawarehousereader.InstallationMetaDataEmbeddable;
 import generated.se.sundsvall.datawarehousereader.PagingAndSortingMetaData;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
+import org.springframework.data.domain.Sort;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import se.sundsvall.installation.api.model.SearchParameters;
 
 public final class TestUtil {

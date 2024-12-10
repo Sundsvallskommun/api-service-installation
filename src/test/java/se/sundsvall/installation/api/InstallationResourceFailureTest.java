@@ -12,12 +12,11 @@ import static se.sundsvall.installation.TestUtil.createSearchParameters;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.zalando.problem.violations.ConstraintViolationProblem;
 import org.zalando.problem.violations.Violation;
-
 import se.sundsvall.installation.Application;
 import se.sundsvall.installation.service.InstallationService;
 
@@ -27,7 +26,7 @@ class InstallationResourceFailureTest {
 
 	private static final String PATH = "/{municipalityId}/installations";
 
-	@MockBean
+	@MockitoBean
 	private InstallationService installationServiceMock;
 
 	@Autowired

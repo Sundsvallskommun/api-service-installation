@@ -4,7 +4,6 @@ import static se.sundsvall.installation.service.mapper.Mapper.toInstallationPara
 import static se.sundsvall.installation.service.mapper.Mapper.toInstallationsResponse;
 
 import org.springframework.stereotype.Service;
-
 import se.sundsvall.installation.api.model.InstallationsResponse;
 import se.sundsvall.installation.api.model.SearchParameters;
 import se.sundsvall.installation.integration.datawarehousereader.DataWarehouseReaderClient;

@@ -6,24 +6,28 @@
 		"totalPages": 1,
 		"page": 1
 	},
-	"installationDetails": [{
-		"metaData": [{
-			"displayName": "test",
-			"company": "test",
-			"type": "test",
-			"value": "test",
-			"key": "test"
-		}],
-		"dateLastModified": "2022-06-01",
-		"facilityId": "691071",
-		"careOf": "Testern",
-		"placementId": 5564747,
-		"city": "Testvall",
-		"street": "Testvägen 5",
-		"dateTo": "2023-01-01",
-		"company": "TEST AB",
-		"postCode": "85742",
-		"dateFrom": "2022-01-01",
-		"type": "ELECTRICITY"
-	}]
+	"installationDetails": [
+		{
+			"metaData": [
+				{
+					"displayName": "test",
+					"company": "test",
+					"type": "test",
+					"value": "test",
+					"key": "test"
+				}
+			],
+			"dateLastModified": "2022-06-01",
+			"facilityId": "691071",
+			"careOf": "Testern",
+			"placementId": 5564747,
+			"city": "Testvall",
+			"street": "Testvägen 5",
+			"dateTo": "2023-01-01",
+			"company": "TEST AB",
+			"postCode": "85742",
+			"dateFrom": "2022-01-01",
+			"type": "ELECTRICITY"
+		}
+	]
 }
