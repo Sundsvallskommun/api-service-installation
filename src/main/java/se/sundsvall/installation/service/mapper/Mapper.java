@@ -1,15 +1,13 @@
 package se.sundsvall.installation.service.mapper;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.data.domain.Sort.Direction;
-
 import generated.se.sundsvall.datawarehousereader.Category;
 import generated.se.sundsvall.datawarehousereader.InstallationDetailsResponse;
 import generated.se.sundsvall.datawarehousereader.InstallationMetaDataEmbeddable;
 import generated.se.sundsvall.datawarehousereader.InstallationParameters;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.data.domain.Sort.Direction;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 import se.sundsvall.installation.api.model.Installation;
 import se.sundsvall.installation.api.model.InstallationsResponse;

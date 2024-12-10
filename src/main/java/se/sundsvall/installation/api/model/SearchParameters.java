@@ -1,18 +1,15 @@
 package se.sundsvall.installation.api.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-
-import org.springframework.data.domain.Sort;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
-import se.sundsvall.installation.api.validation.ValidCategory;
-
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
+import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
+import se.sundsvall.installation.api.validation.ValidCategory;
 
 @Getter
 @Setter

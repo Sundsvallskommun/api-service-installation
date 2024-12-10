@@ -16,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
 import se.sundsvall.installation.Application;
 import se.sundsvall.installation.api.model.SearchParameters;
 import se.sundsvall.installation.service.InstallationService;
