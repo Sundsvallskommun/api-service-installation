@@ -26,7 +26,7 @@ class InstallationResourceTest {
 
 	private static final String PATH = "/{municipalityId}/installations";
 
-	@MockBean
+	@MockitoBean
 	private InstallationService installationServiceMock;
 
 	@Captor
