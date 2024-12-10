@@ -2,10 +2,10 @@ package openapi;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
-import java.util.List;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import java.util.List;
+import net.javacrumbs.jsonunit.core.Option;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,11 +14,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.io.Resource;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import se.sundsvall.dept44.util.ResourceUtils;
 import se.sundsvall.installation.Application;
-
-import net.javacrumbs.jsonunit.core.Option;
 
 @ActiveProfiles("it")
 @SpringBootTest(
@@ -47,13 +44,13 @@ class OpenApiSpecificationIT {
 
 	@Test
 	void compareOpenApiSpecifications() {
-		String existingOpenApiSpecification = ResourceUtils.asString(openApiResource);
-		String currentOpenApiSpecification = getCurrentOpenApiSpecification();
+		final String existingOpenApiSpecification = ResourceUtils.asString(openApiResource);
+		final String currentOpenApiSpecification = getCurrentOpenApiSpecification();
 
-		assertThatJson(toJson(existingOpenApiSpecification))
+		assertThatJson(toJson(currentOpenApiSpecification))
 			.withOptions(List.of(Option.IGNORING_ARRAY_ORDER))
 			.whenIgnoringPaths("servers")
-			.isEqualTo(toJson(currentOpenApiSpecification));
+			.isEqualTo(toJson(existingOpenApiSpecification));
 	}
 
 	/**
@@ -62,7 +59,7 @@ class OpenApiSpecificationIT {
 	 * @return the current OpenAPI specification
 	 */
 	private String getCurrentOpenApiSpecification() {
-		var uri = UriComponentsBuilder.fromPath("/api-docs.yaml")
+		final var uri = UriComponentsBuilder.fromPath("/api-docs.yaml")
 			.buildAndExpand(openApiName, openApiVersion)
 			.toUri();
 
@@ -78,7 +75,7 @@ class OpenApiSpecificationIT {
 	private String toJson(final String yaml) {
 		try {
 			return YAML_MAPPER.readTree(yaml).toString();
-		} catch (JsonProcessingException e) {
+		} catch (final JsonProcessingException e) {
 			throw new IllegalStateException("Unable to convert YAML to JSON", e);
 		}
 	}

@@ -35,7 +35,7 @@ class DataWarehouseReaderConfigurationTest {
 	@Mock
 	private DataWarehouseReaderProperties propertiesMock;
 
-	@MockitoSpyBean
+	@Spy
 	private FeignMultiCustomizer feignMultiCustomizerSpy;
 
 	@Captor
@@ -53,7 +53,7 @@ class DataWarehouseReaderConfigurationTest {
 		when(propertiesMock.readTimeout()).thenReturn(readTimeout);
 		when(clientRepositoryMock.findByRegistrationId(CLIENT_ID)).thenReturn(clientRegistrationMock);
 
-		try (MockedStatic<FeignMultiCustomizer> feignMultiCustomizerMock = Mockito.mockStatic(FeignMultiCustomizer.class)) {
+		try (final MockedStatic<FeignMultiCustomizer> feignMultiCustomizerMock = Mockito.mockStatic(FeignMultiCustomizer.class)) {
 			feignMultiCustomizerMock.when(FeignMultiCustomizer::create).thenReturn(feignMultiCustomizerSpy);
 			configuration.feignBuilderCustomizer(clientRepositoryMock, propertiesMock);
 			feignMultiCustomizerMock.verify(FeignMultiCustomizer::create);

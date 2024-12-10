@@ -1,106 +1,107 @@
 openapi: 3.0.1
 info:
   title: api-installation
-  contact: {}
+  contact: { }
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
   version: "2.0"
 servers:
-- url: http://localhost:8080
-  description: Generated server url
+  - url: http://localhost:58506
+    description: Generated server url
 paths:
   /{municipalityId}/installations:
     get:
       tags:
-      - Installation
+        - Installation
       summary: Get uninstalled installations
       description: Resource returns all installations matching provided search parameters
       operationId: getInstallations
       parameters:
-      - name: municipalityId
-        in: path
-        description: Municipality id
-        required: true
-        schema:
-          type: string
-        example: 2281
-      - name: category
-        in: query
-        description: Category
-        required: false
-        schema:
-          type: string
-          description: Category
-          example: ELECTRICITY
-        example: ELECTRICITY
-      - name: facilityId
-        in: query
-        description: Facility id
-        required: false
-        schema:
-          type: string
-          description: Facility id
-          example: 123456789132456789
-        example: 123456789132456789
-      - name: installed
-        in: query
-        description: Is the installation installed
-        required: false
-        schema:
-          type: string
-          description: Is the installation installed
-          example: true
-        example: true
-      - name: dateFrom
-        in: query
-        description: Last changed date. Format is YYYY-MM-DD.
-        required: false
-        schema:
-          type: string
-          description: Last changed date. Format is YYYY-MM-DD.
-          example: 2022-01-01
-        example: 2022-01-01
-      - name: sortBy
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
+        - name: municipalityId
+          in: path
+          description: Municipality id
+          required: true
+          schema:
             type: string
-            description: The properties to sort on
-            example: propertyName
-      - name: sortDirection
-        in: query
-        description: The sort order direction
-        required: false
-        schema:
-          type: string
+          example: 2281
+        - name: category
+          in: query
+          description: Category
+          required: false
+          schema:
+            type: string
+            description: Category
+            example: ELECTRICITY
+          example: ELECTRICITY
+        - name: facilityId
+          in: query
+          description: Facility id
+          required: false
+          schema:
+            type: string
+            description: Facility id
+            example: "123456789132456789"
+          example: 123456789132456789
+        - name: installed
+          in: query
+          description: Is the installation installed
+          required: false
+          schema:
+            type: boolean
+            description: Is the installation installed
+            example: true
+          example: true
+        - name: dateFrom
+          in: query
+          description: Last changed date. Format is YYYY-MM-DD.
+          required: false
+          schema:
+            type: string
+            description: Last changed date. Format is YYYY-MM-DD.
+            format: date
+            example: 2022-01-01
+          example: 2022-01-01
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              description: The properties to sort on
+              example: propertyName
+        - name: sortDirection
+          in: query
           description: The sort order direction
+          required: false
+          schema:
+            $ref: "#/components/schemas/Direction"
           example: ASC
-        example: ASC
-      - name: page
-        in: query
-        description: Page number
-        required: false
-        schema:
-          minimum: 1
-          type: string
+        - name: page
+          in: query
           description: Page number
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            description: Page number
+            format: int32
+            example: 1
+            default: 1
           example: 1
-          default: "1"
-        example: 1
-      - name: limit
-        in: query
-        description: Result size per page. Maximum allowed value is dynamically configured
-        required: false
-        schema:
-          minimum: 1
-          type: string
-          description: Result size per page. Maximum allowed value is dynamically
-            configured
+        - name: limit
+          in: query
+          description: Result size per page. Maximum allowed value is dynamically configured
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            description: Result size per page. Maximum allowed value is dynamically
+              configured
+            format: int32
+            example: 15
           example: 15
-        example: 15
       responses:
         "500":
           description: Internal Server error
@@ -123,8 +124,8 @@ paths:
             application/problem+json:
               schema:
                 oneOf:
-                - $ref: "#/components/schemas/Problem"
-                - $ref: "#/components/schemas/ConstraintViolationProblem"
+                  - $ref: "#/components/schemas/Problem"
+                  - $ref: "#/components/schemas/ConstraintViolationProblem"
         "502":
           description: Bad Gateway
           content:
@@ -134,7 +135,7 @@ paths:
   /api-docs:
     get:
       tags:
-      - API
+        - API
       summary: OpenAPI
       operationId: getApiDocs
       responses:
@@ -149,6 +150,13 @@ paths:
       x-wso2-mutual-ssl: Optional
 components:
   schemas:
+    Direction:
+      type: string
+      description: The sort order direction
+      example: ASC
+      enum:
+        - ASC
+        - DESC
     Problem:
       type: object
       properties:
@@ -171,11 +179,11 @@ components:
     StatusType:
       type: object
       properties:
+        reasonPhrase:
+          type: string
         statusCode:
           type: integer
           format: int32
-        reasonPhrase:
-          type: string
     ConstraintViolationProblem:
       type: object
       properties:
@@ -343,13 +351,6 @@ components:
           type: string
         message:
           type: string
-    Direction:
-      type: string
-      description: The sort order direction
-      example: ASC
-      enum:
-      - ASC
-      - DESC
     Installation:
       type: object
       properties:
@@ -492,4 +493,4 @@ components:
           $ref: "#/components/schemas/Direction"
       description: PagingAndSortingMetaData model
       readOnly: true
-  securitySchemes: {}
+  securitySchemes: { }
