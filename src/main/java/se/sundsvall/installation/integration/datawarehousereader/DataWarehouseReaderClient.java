@@ -4,6 +4,7 @@ import static se.sundsvall.installation.integration.datawarehousereader.configur
 
 import generated.se.sundsvall.datawarehousereader.InstallationDetailsResponse;
 import generated.se.sundsvall.datawarehousereader.InstallationParameters;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import se.sundsvall.installation.integration.datawarehousereader.configuration.D
 	name = CLIENT_ID,
 	url = "${integration.datawarehousereader.url}",
 	configuration = DataWarehouseReaderConfiguration.class)
+@CircuitBreaker(name = CLIENT_ID)
 public interface DataWarehouseReaderClient {
 
 	@GetMapping("/{municipalityId}/installations")
