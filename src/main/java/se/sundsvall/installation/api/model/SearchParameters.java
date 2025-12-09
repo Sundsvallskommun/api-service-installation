@@ -16,17 +16,17 @@ import se.sundsvall.installation.api.validation.ValidCategory;
 @Schema(description = "Search parameters model")
 public class SearchParameters extends AbstractParameterPagingAndSortingBase {
 
-	@Schema(description = "Category", example = "ELECTRICITY")
+	@Schema(description = "Category", examples = "ELECTRICITY")
 	@ValidCategory
 	private String category;
 
-	@Schema(description = "Facility id", example = "123456789132456789")
+	@Schema(description = "Facility id", examples = "123456789132456789")
 	private String facilityId;
 
-	@Schema(description = "Is the installation installed", example = "true")
+	@Schema(description = "Is the installation installed", examples = "true")
 	private Boolean installed;
 
-	@Schema(description = "Last changed date. Format is YYYY-MM-DD.", example = "2022-01-01")
+	@Schema(description = "Last changed date. Format is YYYY-MM-DD.", examples = "2022-01-01")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate dateFrom;
 
