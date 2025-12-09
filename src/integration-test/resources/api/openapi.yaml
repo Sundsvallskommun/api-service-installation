@@ -1,13 +1,13 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: api-installation
-  contact: { }
+  contact: {}
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
   version: "2.0"
 servers:
-  - url: http://localhost:58506
+  - url: http://localhost:60608
     description: Generated server url
 paths:
   /{municipalityId}/installations:
@@ -32,8 +32,8 @@ paths:
           schema:
             type: string
             description: Category
-            example: ELECTRICITY
-          example: ELECTRICITY
+            examples:
+              - ELECTRICITY
         - name: facilityId
           in: query
           description: Facility id
@@ -41,8 +41,8 @@ paths:
           schema:
             type: string
             description: Facility id
-            example: "123456789132456789"
-          example: 123456789132456789
+            examples:
+              - "123456789132456789"
         - name: installed
           in: query
           description: Is the installation installed
@@ -50,18 +50,18 @@ paths:
           schema:
             type: boolean
             description: Is the installation installed
-            example: true
-          example: true
+            examples:
+              - "true"
         - name: dateFrom
           in: query
           description: Last changed date. Format is YYYY-MM-DD.
           required: false
           schema:
             type: string
-            description: Last changed date. Format is YYYY-MM-DD.
             format: date
-            example: 2022-01-01
-          example: 2022-01-01
+            description: Last changed date. Format is YYYY-MM-DD.
+            examples:
+              - 2022-01-01
         - name: sortBy
           in: query
           required: false
@@ -83,32 +83,26 @@ paths:
           description: Page number
           required: false
           schema:
-            minimum: 1
             type: integer
-            description: Page number
             format: int32
-            example: 1
             default: 1
+            description: Page number
+            example: 1
+            minimum: 1
           example: 1
         - name: limit
           in: query
           description: Result size per page. Maximum allowed value is dynamically configured
           required: false
           schema:
-            minimum: 1
             type: integer
+            format: int32
             description: Result size per page. Maximum allowed value is dynamically
               configured
-            format: int32
             example: 15
+            minimum: 1
           example: 15
       responses:
-        "500":
-          description: Internal Server error
-          content:
-            application/problem+json:
-              schema:
-                $ref: "#/components/schemas/Problem"
         "200":
           description: Successful operation
           content:
@@ -126,6 +120,12 @@ paths:
                 oneOf:
                   - $ref: "#/components/schemas/Problem"
                   - $ref: "#/components/schemas/ConstraintViolationProblem"
+        "500":
+          description: Internal Server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
         "502":
           description: Bad Gateway
           content:
@@ -150,16 +150,15 @@ paths:
       x-wso2-mutual-ssl: Optional
 components:
   schemas:
-    Direction:
-      type: string
-      description: The sort order direction
-      example: ASC
-      enum:
-        - ASC
-        - DESC
     Problem:
       type: object
       properties:
+        status:
+          $ref: "#/components/schemas/StatusType"
+        title:
+          type: string
+        detail:
+          type: string
         instance:
           type: string
           format: uri
@@ -168,22 +167,15 @@ components:
           format: uri
         parameters:
           type: object
-          additionalProperties:
-            type: object
-        status:
-          $ref: "#/components/schemas/StatusType"
-        title:
-          type: string
-        detail:
-          type: string
+          additionalProperties: {}
     StatusType:
       type: object
       properties:
-        reasonPhrase:
-          type: string
         statusCode:
           type: integer
           format: int32
+        reasonPhrase:
+          type: string
     ConstraintViolationProblem:
       type: object
       properties:
@@ -224,15 +216,14 @@ components:
           type: string
         message:
           type: string
+        detail:
+          type: string
         instance:
           type: string
           format: uri
         parameters:
           type: object
-          additionalProperties:
-            type: object
-        detail:
-          type: string
+          additionalProperties: {}
         suppressed:
           type: array
           items:
@@ -269,8 +260,7 @@ components:
     ThrowableProblem:
       type: object
       properties:
-        cause:
-          $ref: "#/components/schemas/ThrowableProblem"
+        cause: {}
         stackTrace:
           type: array
           items:
@@ -295,6 +285,12 @@ components:
                 type: boolean
         message:
           type: string
+        status:
+          $ref: "#/components/schemas/StatusType"
+        title:
+          type: string
+        detail:
+          type: string
         instance:
           type: string
           format: uri
@@ -303,14 +299,7 @@ components:
           format: uri
         parameters:
           type: object
-          additionalProperties:
-            type: object
-        status:
-          $ref: "#/components/schemas/StatusType"
-        title:
-          type: string
-        detail:
-          type: string
+          additionalProperties: {}
         suppressed:
           type: array
           items:
@@ -351,6 +340,13 @@ components:
           type: string
         message:
           type: string
+    Direction:
+      type: string
+      description: The sort order direction
+      enum:
+        - ASC
+        - DESC
+      example: ASC
     Installation:
       type: object
       properties:
@@ -368,8 +364,8 @@ components:
           readOnly: true
         placementId:
           type: integer
-          description: Placement id
           format: int32
+          description: Placement id
           readOnly: true
         careOf:
           type: string
@@ -393,36 +389,38 @@ components:
           readOnly: true
         dateFrom:
           type: string
-          description: From date
           format: date
+          description: From date
           readOnly: true
         dateTo:
           type: string
-          description: To date
           format: date
+          description: To date
           readOnly: true
         dateLastModified:
           type: string
-          description: Date when object was last modified
           format: date
+          description: Date when object was last modified
           readOnly: true
         metaData:
           type: array
           description: Meta data
-          readOnly: true
           items:
             $ref: "#/components/schemas/MetaData"
-      readOnly: true
+          readOnly: true
     InstallationsResponse:
       type: object
       properties:
         installationDetails:
           type: array
-          readOnly: true
           items:
             $ref: "#/components/schemas/Installation"
+            readOnly: true
+          readOnly: true
         _meta:
           $ref: "#/components/schemas/PagingAndSortingMetaData"
+          description: Paging and sorting metadata
+          readOnly: true
     MetaData:
       type: object
       properties:
@@ -446,51 +444,50 @@ components:
           type: string
           description: Display Name
           readOnly: true
-      description: Meta data
-      readOnly: true
     PagingAndSortingMetaData:
       type: object
+      description: PagingAndSortingMetaData model
       properties:
         page:
           type: integer
-          description: Current page
           format: int32
-          readOnly: true
+          description: Current page
           example: 5
+          readOnly: true
         limit:
           type: integer
-          description: Displayed objects per page
           format: int32
-          readOnly: true
+          description: Displayed objects per page
           example: 20
+          readOnly: true
         count:
           type: integer
-          description: Displayed objects on current page
           format: int32
-          readOnly: true
+          description: Displayed objects on current page
           example: 13
+          readOnly: true
         totalRecords:
           type: integer
-          description: Total amount of hits based on provided search parameters
           format: int64
-          readOnly: true
+          description: Total amount of hits based on provided search parameters
           example: 98
+          readOnly: true
         totalPages:
           type: integer
-          description: Total amount of pages based on provided search parameters
           format: int32
-          readOnly: true
+          description: Total amount of pages based on provided search parameters
           example: 23
+          readOnly: true
         sortBy:
           type: array
-          readOnly: true
           items:
             type: string
             description: The properties to sort by
-            readOnly: true
             example: property
+            readOnly: true
+          readOnly: true
         sortDirection:
           $ref: "#/components/schemas/Direction"
-      description: PagingAndSortingMetaData model
-      readOnly: true
-  securitySchemes: { }
+          description: The sort order direction
+          example: ASC
+  securitySchemes: {}
