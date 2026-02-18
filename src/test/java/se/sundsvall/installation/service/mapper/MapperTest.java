@@ -1,5 +1,9 @@
 package se.sundsvall.installation.service.mapper;
 
+import java.util.List;
+import org.junit.jupiter.api.Test;
+import se.sundsvall.installation.api.model.SearchParameters;
+
 import static generated.se.sundsvall.datawarehousereader.Category.ELECTRICITY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static se.sundsvall.installation.TestUtil.createInstallationDetails;
@@ -8,10 +12,6 @@ import static se.sundsvall.installation.TestUtil.createInstallationMetaDataEmbed
 import static se.sundsvall.installation.TestUtil.createPagingAndSortingMetaData;
 import static se.sundsvall.installation.TestUtil.createSearchParameters;
 import static se.sundsvall.installation.service.mapper.Mapper.toPagingAndSortingMetaData;
-
-import java.util.List;
-import org.junit.jupiter.api.Test;
-import se.sundsvall.installation.api.model.SearchParameters;
 
 class MapperTest {
 

@@ -1,7 +1,5 @@
 package se.sundsvall.installation;
 
-import static java.lang.String.valueOf;
-
 import generated.se.sundsvall.datawarehousereader.InstallationDetails;
 import generated.se.sundsvall.datawarehousereader.InstallationDetailsResponse;
 import generated.se.sundsvall.datawarehousereader.InstallationMetaDataEmbeddable;
@@ -14,6 +12,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import se.sundsvall.installation.api.model.SearchParameters;
+
+import static java.lang.String.valueOf;
 
 public final class TestUtil {
 

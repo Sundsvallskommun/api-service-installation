@@ -7,101 +7,101 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "2.0"
 servers:
-  - url: http://localhost:60608
-    description: Generated server url
+- url: http://localhost:63984
+  description: Generated server url
 paths:
   /{municipalityId}/installations:
     get:
       tags:
-        - Installation
+      - Installation
       summary: Get uninstalled installations
       description: Resource returns all installations matching provided search parameters
       operationId: getInstallations
       parameters:
-        - name: municipalityId
-          in: path
-          description: Municipality id
-          required: true
-          schema:
-            type: string
-          example: 2281
-        - name: category
-          in: query
+      - name: municipalityId
+        in: path
+        description: Municipality id
+        required: true
+        schema:
+          type: string
+        example: 2281
+      - name: category
+        in: query
+        description: Category
+        required: false
+        schema:
+          type: string
           description: Category
-          required: false
-          schema:
-            type: string
-            description: Category
-            examples:
-              - ELECTRICITY
-        - name: facilityId
-          in: query
+          examples:
+          - ELECTRICITY
+      - name: facilityId
+        in: query
+        description: Facility id
+        required: false
+        schema:
+          type: string
           description: Facility id
-          required: false
-          schema:
-            type: string
-            description: Facility id
-            examples:
-              - "123456789132456789"
-        - name: installed
-          in: query
+          examples:
+          - "123456789132456789"
+      - name: installed
+        in: query
+        description: Is the installation installed
+        required: false
+        schema:
+          type: boolean
           description: Is the installation installed
-          required: false
-          schema:
-            type: boolean
-            description: Is the installation installed
-            examples:
-              - "true"
-        - name: dateFrom
-          in: query
+          examples:
+          - "true"
+      - name: dateFrom
+        in: query
+        description: Last changed date. Format is YYYY-MM-DD.
+        required: false
+        schema:
+          type: string
+          format: date
           description: Last changed date. Format is YYYY-MM-DD.
-          required: false
-          schema:
+          examples:
+          - 2022-01-01
+      - name: sortBy
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
             type: string
-            format: date
-            description: Last changed date. Format is YYYY-MM-DD.
+            description: The properties to sort on
             examples:
-              - 2022-01-01
-        - name: sortBy
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-              description: The properties to sort on
-              example: propertyName
-        - name: sortDirection
-          in: query
-          description: The sort order direction
-          required: false
-          schema:
-            $ref: "#/components/schemas/Direction"
-          example: ASC
-        - name: page
-          in: query
+            - propertyName
+      - name: sortDirection
+        in: query
+        description: The sort order direction
+        required: false
+        schema:
+          $ref: "#/components/schemas/Direction"
+      - name: page
+        in: query
+        description: Page number
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 1
           description: Page number
-          required: false
-          schema:
-            type: integer
-            format: int32
-            default: 1
-            description: Page number
-            example: 1
-            minimum: 1
-          example: 1
-        - name: limit
-          in: query
-          description: Result size per page. Maximum allowed value is dynamically configured
-          required: false
-          schema:
-            type: integer
-            format: int32
-            description: Result size per page. Maximum allowed value is dynamically
-              configured
-            example: 15
-            minimum: 1
-          example: 15
+          examples:
+          - "1"
+          minimum: 1
+      - name: limit
+        in: query
+        description: Result size per page. Maximum allowed value is dynamically configured
+        required: false
+        schema:
+          type: integer
+          format: int32
+          description: Result size per page. Maximum allowed value is dynamically
+            configured
+          examples:
+          - "15"
+          minimum: 1
       responses:
         "200":
           description: Successful operation
@@ -118,8 +118,8 @@ paths:
             application/problem+json:
               schema:
                 oneOf:
-                  - $ref: "#/components/schemas/Problem"
-                  - $ref: "#/components/schemas/ConstraintViolationProblem"
+                - $ref: "#/components/schemas/Problem"
+                - $ref: "#/components/schemas/ConstraintViolationProblem"
         "500":
           description: Internal Server error
           content:
@@ -135,7 +135,7 @@ paths:
   /api-docs:
     get:
       tags:
-        - API
+      - API
       summary: OpenAPI
       operationId: getApiDocs
       responses:
@@ -153,12 +153,12 @@ components:
     Problem:
       type: object
       properties:
-        status:
-          $ref: "#/components/schemas/StatusType"
         title:
           type: string
         detail:
           type: string
+        status:
+          $ref: "#/components/schemas/StatusType"
         instance:
           type: string
           format: uri
@@ -285,12 +285,12 @@ components:
                 type: boolean
         message:
           type: string
-        status:
-          $ref: "#/components/schemas/StatusType"
         title:
           type: string
         detail:
           type: string
+        status:
+          $ref: "#/components/schemas/StatusType"
         instance:
           type: string
           format: uri
@@ -344,9 +344,10 @@ components:
       type: string
       description: The sort order direction
       enum:
-        - ASC
-        - DESC
-      example: ASC
+      - ASC
+      - DESC
+      examples:
+      - ASC
     Installation:
       type: object
       properties:
@@ -452,42 +453,49 @@ components:
           type: integer
           format: int32
           description: Current page
-          example: 5
+          examples:
+          - "5"
           readOnly: true
         limit:
           type: integer
           format: int32
           description: Displayed objects per page
-          example: 20
+          examples:
+          - "20"
           readOnly: true
         count:
           type: integer
           format: int32
           description: Displayed objects on current page
-          example: 13
+          examples:
+          - "13"
           readOnly: true
         totalRecords:
           type: integer
           format: int64
           description: Total amount of hits based on provided search parameters
-          example: 98
+          examples:
+          - "98"
           readOnly: true
         totalPages:
           type: integer
           format: int32
           description: Total amount of pages based on provided search parameters
-          example: 23
+          examples:
+          - "23"
           readOnly: true
         sortBy:
           type: array
           items:
             type: string
             description: The properties to sort by
-            example: property
+            examples:
+            - property
             readOnly: true
           readOnly: true
         sortDirection:
           $ref: "#/components/schemas/Direction"
           description: The sort order direction
-          example: ASC
+          examples:
+          - ASC
   securitySchemes: {}

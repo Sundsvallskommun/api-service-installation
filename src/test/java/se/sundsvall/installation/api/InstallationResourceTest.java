@@ -1,13 +1,5 @@
 package se.sundsvall.installation.api;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
-import static se.sundsvall.installation.TestUtil.createParameterMap;
-import static se.sundsvall.installation.TestUtil.createSearchParameters;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -19,6 +11,14 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import se.sundsvall.installation.Application;
 import se.sundsvall.installation.api.model.SearchParameters;
 import se.sundsvall.installation.service.InstallationService;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+import static se.sundsvall.installation.TestUtil.createParameterMap;
+import static se.sundsvall.installation.TestUtil.createSearchParameters;
 
 @SpringBootTest(classes = Application.class, webEnvironment = RANDOM_PORT)
 @ActiveProfiles("junit")
