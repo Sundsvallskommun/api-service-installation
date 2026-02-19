@@ -1,11 +1,5 @@
 package se.sundsvall.installation.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static se.sundsvall.installation.TestUtil.createSearchParameters;
-
 import generated.se.sundsvall.datawarehousereader.InstallationParameters;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +9,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.sundsvall.installation.integration.datawarehousereader.DataWarehouseReaderClient;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static se.sundsvall.installation.TestUtil.createSearchParameters;
 
 @ExtendWith(MockitoExtension.class)
 class InstallationServiceTest {
