@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "2.0"
 servers:
-- url: http://localhost:62899
+- url: http://localhost:53284
   description: Generated server url
 paths:
   /{municipalityId}/installations:
