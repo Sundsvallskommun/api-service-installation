@@ -51,7 +51,7 @@ paths:
           type: boolean
           description: Is the installation installed
           examples:
-          - "true"
+          - true
       - name: dateFrom
         in: query
         description: Last changed date. Format is YYYY-MM-DD.
