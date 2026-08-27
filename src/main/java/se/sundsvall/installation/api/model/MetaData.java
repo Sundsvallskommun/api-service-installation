@@ -16,9 +16,6 @@ import lombok.ToString;
 @AllArgsConstructor
 public class MetaData {
 
-	@Schema(description = "Company name", accessMode = Schema.AccessMode.READ_ONLY)
-	private String company;
-
 	@Schema(description = "Key", accessMode = Schema.AccessMode.READ_ONLY)
 	private String key;
 

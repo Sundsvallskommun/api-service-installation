@@ -24,7 +24,6 @@ class MetaDataTest {
 		final var metaData = MetaData.builder()
 			.withKey("key")
 			.withValue("value")
-			.withCompany("company")
 			.withType("type")
 			.withDisplayName("displayName")
 			.build();
@@ -32,7 +31,6 @@ class MetaDataTest {
 		assertThat(metaData).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(metaData.getKey()).isEqualTo("key");
 		assertThat(metaData.getValue()).isEqualTo("value");
-		assertThat(metaData.getCompany()).isEqualTo("company");
 		assertThat(metaData.getType()).isEqualTo("type");
 		assertThat(metaData.getDisplayName()).isEqualTo("displayName");
 	}

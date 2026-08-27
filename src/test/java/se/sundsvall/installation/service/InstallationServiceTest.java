@@ -1,17 +1,14 @@
 package se.sundsvall.installation.service;
 
-import generated.se.sundsvall.datawarehousereader.InstallationParameters;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.sundsvall.installation.integration.datawarehousereader.DataWarehouseReaderClient;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.eq;
+import static generated.se.sundsvall.datawarehousereader.Category.ELECTRICITY;
+import static generated.se.sundsvall.datawarehousereader.Direction.ASC;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static se.sundsvall.installation.TestUtil.createSearchParameters;
@@ -21,9 +18,6 @@ class InstallationServiceTest {
 
 	@Mock
 	private DataWarehouseReaderClient dataWarehouseReaderClient;
-
-	@Captor
-	private ArgumentCaptor<InstallationParameters> installationParametersCaptor;
 
 	@InjectMocks
 	private InstallationService installationService;
@@ -36,18 +30,28 @@ class InstallationServiceTest {
 
 		installationService.getInstallations(municipalityId, searchParameters);
 
-		verify(dataWarehouseReaderClient).getInstallationDetails(eq(municipalityId), installationParametersCaptor.capture());
+		verify(dataWarehouseReaderClient).getInstallationDetails(
+			municipalityId,
+			searchParameters.getInstalled(),
+			searchParameters.getDateFrom(),
+			ELECTRICITY,
+			searchParameters.getFacilityId(),
+			searchParameters.getSortBy(),
+			ASC,
+			searchParameters.getPage(),
+			searchParameters.getLimit());
 
-		assertThat(installationParametersCaptor.getValue()).satisfies(bean -> {
-			assertThat(bean.getCategory()).hasToString(searchParameters.getCategory());
-			assertThat(bean.getDateFrom()).isEqualTo(searchParameters.getDateFrom());
-			assertThat(bean.getFacilityId()).isEqualTo(searchParameters.getFacilityId());
-			assertThat(bean.getInstalled()).isEqualTo(searchParameters.getInstalled());
+		verifyNoMoreInteractions(dataWarehouseReaderClient);
+	}
 
-			assertThat(bean.getLimit()).isEqualTo(searchParameters.getLimit());
-			assertThat(bean.getPage()).isEqualTo(searchParameters.getPage());
-			assertThat(bean.getSortBy()).isEqualTo(searchParameters.getSortBy());
-		});
+	@Test
+	void getInstallationsWithNullSearchParameters() {
+
+		final var municipalityId = "municipalityId";
+
+		installationService.getInstallations(municipalityId, null);
+
+		verify(dataWarehouseReaderClient).getInstallationDetails(municipalityId, null, null, null, null, null, ASC, 1, 100);
 
 		verifyNoMoreInteractions(dataWarehouseReaderClient);
 	}

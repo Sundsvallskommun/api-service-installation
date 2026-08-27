@@ -1,7 +1,33 @@
 {
 	"request": {
 		"method": "GET",
-		"url": "/api-datawarehousereader/2281/installations?installed=true&sortDirection=ASC&facilityId=123456789132456780&limit=15&sortBy=propertyName&page=1&category=ELECTRICITY&dateFrom=2022-01-01"
+		"urlPath": "/api-datawarehousereader/2281/installations",
+		"queryParameters": {
+			"installed": {
+				"equalTo": "true"
+			},
+			"lastModifiedDateFrom": {
+				"equalTo": "2022-01-01"
+			},
+			"category": {
+				"equalTo": "ELECTRICITY"
+			},
+			"facilityId": {
+				"equalTo": "123456789132456780"
+			},
+			"sortBy": {
+				"equalTo": "propertyName"
+			},
+			"sortDirection": {
+				"equalTo": "ASC"
+			},
+			"page": {
+				"equalTo": "1"
+			},
+			"limit": {
+				"equalTo": "15"
+			}
+		}
 	},
 	"response": {
 		"headers": {
