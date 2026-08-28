@@ -2,44 +2,36 @@ package se.sundsvall.installation.service.mapper;
 
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import se.sundsvall.installation.api.model.SearchParameters;
+import org.springframework.data.domain.Sort.Direction;
 
 import static generated.se.sundsvall.datawarehousereader.Category.ELECTRICITY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static se.sundsvall.installation.TestUtil.createInstallationDetails;
 import static se.sundsvall.installation.TestUtil.createInstallationDetailsResponse;
-import static se.sundsvall.installation.TestUtil.createInstallationMetaDataEmbeddable;
+import static se.sundsvall.installation.TestUtil.createInstallationMetaData;
 import static se.sundsvall.installation.TestUtil.createPagingAndSortingMetaData;
-import static se.sundsvall.installation.TestUtil.createSearchParameters;
 import static se.sundsvall.installation.service.mapper.Mapper.toPagingAndSortingMetaData;
 
 class MapperTest {
 
 	@Test
-	void toInstallationParameters() {
-		final var searchParameters = createSearchParameters();
-
-		final var installationParameters = Mapper.toInstallationParameters(searchParameters);
-
-		assertThat(installationParameters.getInstalled()).isFalse();
-		assertThat(installationParameters.getDateFrom()).isEqualTo(searchParameters.getDateFrom());
-		assertThat(installationParameters.getCategory()).isEqualTo(ELECTRICITY);
-		assertThat(installationParameters.getFacilityId()).isEqualTo(searchParameters.getFacilityId());
-		assertThat(installationParameters.getPage()).isEqualTo(searchParameters.getPage());
-		assertThat(installationParameters.getLimit()).isEqualTo(searchParameters.getLimit());
-		assertThat(installationParameters.getSortBy()).isEqualTo(searchParameters.getSortBy());
+	void toCategory() {
+		assertThat(Mapper.toCategory("ELECTRICITY")).isEqualTo(ELECTRICITY);
 	}
 
 	@Test
-	void toInstallationParametersFromNull() {
-		assertThat(Mapper.toInstallationParameters(null)).isNull();
+	void toCategoryFromNull() {
+		assertThat(Mapper.toCategory(null)).isNull();
 	}
 
 	@Test
-	void toInstallationParametersFromEmptyParameters() {
-		final var bean = Mapper.toInstallationParameters(SearchParameters.create());
+	void toDirection() {
+		assertThat(Mapper.toDirection(Direction.DESC)).isEqualTo(generated.se.sundsvall.datawarehousereader.Direction.DESC);
+	}
 
-		assertThat(bean).hasAllNullFieldsOrPropertiesExcept("page", "limit", "sortDirection");
+	@Test
+	void toDirectionFromNull() {
+		assertThat(Mapper.toDirection(null)).isNull();
 	}
 
 	@Test
@@ -100,16 +92,20 @@ class MapperTest {
 	}
 
 	@Test
-	void toMetaDataEmbeddableTest() {
-		final var installationMetaDataEmbeddable = createInstallationMetaDataEmbeddable();
+	void toMetaDataTest() {
+		final var installationMetaData = createInstallationMetaData();
 
-		final var meta = Mapper.toMetaData(installationMetaDataEmbeddable);
+		final var meta = Mapper.toMetaData(installationMetaData);
 
-		assertThat(meta.getKey()).isEqualTo(installationMetaDataEmbeddable.getKey());
-		assertThat(meta.getDisplayName()).isEqualTo(installationMetaDataEmbeddable.getDisplayName());
-		assertThat(meta.getType()).isEqualTo(installationMetaDataEmbeddable.getType());
-		assertThat(meta.getValue()).isEqualTo(installationMetaDataEmbeddable.getValue());
-		assertThat(meta.getCompany()).isEqualTo(installationMetaDataEmbeddable.getCompany());
+		assertThat(meta.getKey()).isEqualTo(installationMetaData.getKey());
+		assertThat(meta.getDisplayName()).isEqualTo(installationMetaData.getDisplayName());
+		assertThat(meta.getType()).isEqualTo(installationMetaData.getType());
+		assertThat(meta.getValue()).isEqualTo(installationMetaData.getValue());
+	}
+
+	@Test
+	void toMetaDataFromNull() {
+		assertThat(Mapper.toMetaData(null)).isNull();
 	}
 
 	@Test

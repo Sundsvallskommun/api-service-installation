@@ -296,10 +296,6 @@ components:
     MetaData:
       type: object
       properties:
-        company:
-          type: string
-          description: Company name
-          readOnly: true
         key:
           type: string
           description: Key

@@ -2,8 +2,7 @@ package se.sundsvall.installation.service.mapper;
 
 import generated.se.sundsvall.datawarehousereader.Category;
 import generated.se.sundsvall.datawarehousereader.InstallationDetailsResponse;
-import generated.se.sundsvall.datawarehousereader.InstallationMetaDataEmbeddable;
-import generated.se.sundsvall.datawarehousereader.InstallationParameters;
+import generated.se.sundsvall.datawarehousereader.InstallationMetaData;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +11,6 @@ import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 import se.sundsvall.installation.api.model.Installation;
 import se.sundsvall.installation.api.model.InstallationsResponse;
 import se.sundsvall.installation.api.model.MetaData;
-import se.sundsvall.installation.api.model.SearchParameters;
 
 public final class Mapper {
 
@@ -20,16 +18,14 @@ public final class Mapper {
 		// prevent instantiation
 	}
 
-	public static InstallationParameters toInstallationParameters(final SearchParameters searchParameters) {
-		return Optional.ofNullable(searchParameters).map(searchParams -> new InstallationParameters()
-			.installed(searchParams.getInstalled())
-			.dateFrom(searchParams.getDateFrom())
-			.category(Optional.ofNullable(searchParams.getCategory()).map(Category::fromValue).orElse(null))
-			.facilityId(searchParams.getFacilityId())
-			.page(searchParams.getPage())
-			.limit(searchParams.getLimit())
-			.sortBy(searchParams.getSortBy())
-			.sortDirection(generated.se.sundsvall.datawarehousereader.Direction.fromValue(searchParams.getSortDirection().name().toUpperCase())))
+	public static Category toCategory(final String category) {
+		return Optional.ofNullable(category).map(Category::fromValue).orElse(null);
+	}
+
+	public static generated.se.sundsvall.datawarehousereader.Direction toDirection(final Direction sortDirection) {
+		return Optional.ofNullable(sortDirection)
+			.map(Direction::name)
+			.map(generated.se.sundsvall.datawarehousereader.Direction::fromValue)
 			.orElse(null);
 	}
 
@@ -78,18 +74,17 @@ public final class Mapper {
 			.orElse(null);
 	}
 
-	public static MetaData toMetaData(final InstallationMetaDataEmbeddable metaData) {
+	public static MetaData toMetaData(final InstallationMetaData metaData) {
 		return Optional.ofNullable(metaData).map(data -> MetaData.builder()
 			.withKey(data.getKey())
 			.withDisplayName(data.getDisplayName())
 			.withType(data.getType())
 			.withValue(data.getValue())
-			.withCompany(data.getCompany())
 			.build())
 			.orElse(null);
 	}
 
-	public static List<MetaData> toMetaDataList(final List<InstallationMetaDataEmbeddable> metaData) {
+	public static List<MetaData> toMetaDataList(final List<InstallationMetaData> metaData) {
 		return metaData.stream()
 			.map(Mapper::toMetaData)
 			.toList();

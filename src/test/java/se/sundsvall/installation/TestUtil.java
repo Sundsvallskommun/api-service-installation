@@ -2,7 +2,7 @@ package se.sundsvall.installation;
 
 import generated.se.sundsvall.datawarehousereader.InstallationDetails;
 import generated.se.sundsvall.datawarehousereader.InstallationDetailsResponse;
-import generated.se.sundsvall.datawarehousereader.InstallationMetaDataEmbeddable;
+import generated.se.sundsvall.datawarehousereader.InstallationMetaData;
 import generated.se.sundsvall.datawarehousereader.PagingAndSortingMetaData;
 import java.time.LocalDate;
 import java.util.List;
@@ -50,11 +50,10 @@ public final class TestUtil {
 			.metaData(List.of());
 	}
 
-	public static InstallationMetaDataEmbeddable createInstallationMetaDataEmbeddable() {
-		return new InstallationMetaDataEmbeddable()
+	public static InstallationMetaData createInstallationMetaData() {
+		return new InstallationMetaData()
 			.key("key")
 			.value("value")
-			.company("company")
 			.type("category")
 			.displayName("displayName");
 	}
